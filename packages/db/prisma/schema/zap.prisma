@@ -1,0 +1,84 @@
+model Zap {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  triggerId String
+  trigger   Trigger?
+  actions   Action[]
+  zapRuns   ZapRun[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("zap")
+}
+
+model Trigger {
+  id            String      @id @default(uuid())
+  metadata      Json        @default("{}")
+  triggerTypeId String
+  type          TriggerType @relation(fields: [triggerTypeId], references: [id])
+  zapId         String      @unique
+  zap           Zap         @relation(fields: [zapId], references: [id], onDelete: Cascade)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@map("trigger")
+}
+
+model Action {
+  id           String     @id @default(uuid())
+  zapId        String
+  zap          Zap        @relation(fields: [zapId], references: [id], onDelete: Cascade)
+  actionTypeId String
+  metadata     Json       @default("{}")
+  type         ActionType @relation(fields: [actionTypeId], references: [id])
+  sortingOrder Int        @default(0)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@map("action")
+}
+
+model ActionType {
+  id        String   @id @default(uuid())
+  name      String
+  image     String
+  actions   Action[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("action_type")
+}
+
+model TriggerType {
+  id        String    @id @default(uuid())
+  name      String
+  image     String
+  triggers  Trigger[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("trigger_type")
+}
+
+model ZapRun {
+  id           String        @id @default(uuid())
+  zapId        String
+  metadata     Json?
+  zap          Zap           @relation(fields: [zapId], references: [id], onDelete: Cascade)
+  zapRunOutbox ZapRunOutbox?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@map("zap_run")
+}
+
+model ZapRunOutbox {
+  id        String   @id @default(uuid())
+  zapRunId  String   @unique
+  zapRun    ZapRun   @relation(fields: [zapRunId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("zap_run_outbox")
+}
