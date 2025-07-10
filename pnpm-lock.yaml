@@ -137,6 +137,25 @@ importers:
         specifier: ^5
         version: 5.8.3
 
+  apps/zap-outbox:
+    dependencies:
+      kafkajs:
+        specifier: ^2.2.4
+        version: 2.2.4
+    devDependencies:
+      '@repo/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@types/bun':
+        specifier: ^1.2.6
+        version: 1.2.18(@types/react@19.1.8)
+      tsc-alias:
+        specifier: ^1.8.11
+        version: 1.8.16
+      typescript:
+        specifier: ^5.8.2
+        version: 5.8.3
+
   packages/db:
     dependencies:
       '@prisma/client':
@@ -1640,6 +1659,10 @@ packages:
 
   jose@6.0.11:
     resolution: {integrity: sha512-QxG7EaliDARm1O1S8BGakqncGT9s25bKL1WSf6/oa17Tkqwi8D2ZNglqCF+DsYF88/rV66Q/Q2mFAy697E1DUg==}
+
+  kafkajs@2.2.4:
+    resolution: {integrity: sha512-j/YeapB1vfPT2iOIUn/vxdyKEuhuY2PxMBvf5JWux6iSaukAccrMtXEY/Lb7OvavDhOWME589bpLrEdnVHjfjA==}
+    engines: {node: '>=14.0.0'}
 
   kysely@0.28.2:
     resolution: {integrity: sha512-4YAVLoF0Sf0UTqlhgQMFU9iQECdah7n+13ANkiuVfRvlK+uI0Etbgd7bVP36dKlG+NXWbhGua8vnGt+sdhvT7A==}
@@ -3617,6 +3640,8 @@ snapshots:
   jiti@2.4.2: {}
 
   jose@6.0.11: {}
+
+  kafkajs@2.2.4: {}
 
   kysely@0.28.2: {}
 
