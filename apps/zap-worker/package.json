@@ -1,0 +1,21 @@
+{
+	"name": "zap-worker",
+	"main": "src/index.ts",
+	"type": "module",
+	"scripts": {
+		"build": "tsc && tsc-alias",
+		"check-types": "tsc --noEmit",
+		"compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile server",
+		"dev": "bun run --hot src/index.ts",
+		"start": "bun run dist/src/index.js"
+	},
+	"dependencies": {
+		"kafkajs": "^2.2.4"
+	},
+	"devDependencies": {
+		"@repo/db": "workspace:*",
+		"@types/bun": "^1.2.6",
+		"tsc-alias": "^1.8.11",
+		"typescript": "^5.8.2"
+	}
+}
