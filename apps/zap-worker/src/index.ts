@@ -75,7 +75,7 @@ async function main() {
 				include: {
 					zap: {
 						include: {
-							actions: {
+							zapActions: {
 								include: {
 									type: true;
 								};
@@ -93,7 +93,7 @@ async function main() {
 							include: {
 								zap: {
 									include: {
-										actions: {
+										zapActions: {
 											include: { type: true },
 										},
 									},
@@ -112,7 +112,7 @@ async function main() {
 				return;
 			}
 
-			const currentAction = zapRunDetails.zap.actions.find(
+			const currentAction = zapRunDetails.zap.zapActions.find(
 				(x) => x.sortingOrder === stage,
 			);
 
@@ -124,7 +124,7 @@ async function main() {
 			console.log("⚙️ Executing action:", currentAction.id);
 			await new Promise((r) => setTimeout(r, 500)); // simulate work
 
-			const lastStage = (zapRunDetails?.zap.actions?.length || 1) - 1;
+			const lastStage = (zapRunDetails?.zap.zapActions?.length || 1) - 1;
 
 			if (stage < lastStage) {
 				try {

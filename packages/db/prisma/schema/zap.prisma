@@ -1,70 +1,71 @@
 model Zap {
-  id        String   @id @default(uuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  triggerId String
-  trigger   Trigger?
-  actions   Action[]
-  zapRuns   ZapRun[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String      @id @default(cuid())
+  name        String
+  description String?
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  zapTrigger  ZapTrigger?
+  zapActions  ZapAction[]
+  zapRuns     ZapRun[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 
   @@map("zap")
 }
 
-model Trigger {
-  id            String      @id @default(uuid())
-  metadata      Json        @default("{}")
-  triggerTypeId String
-  type          TriggerType @relation(fields: [triggerTypeId], references: [id])
-  zapId         String      @unique
-  zap           Zap         @relation(fields: [zapId], references: [id], onDelete: Cascade)
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+model ZapTrigger {
+  id        String   @id @default(cuid())
+  metadata  Json?    @default("{}")
+  triggerId String
+  type      Trigger  @relation(fields: [triggerId], references: [id])
+  zapId     String   @unique
+  zap       Zap      @relation(fields: [zapId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@map("trigger")
+  @@map("zap_trigger")
+}
+
+model ZapAction {
+  id           String   @id @default(cuid())
+  metadata     Json?    @default("{}")
+  actionId     String
+  type         Action   @relation(fields: [actionId], references: [id])
+  zapId        String
+  zap          Zap      @relation(fields: [zapId], references: [id], onDelete: Cascade)
+  sortingOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("zap_action")
 }
 
 model Action {
-  id           String     @id @default(uuid())
-  zapId        String
-  zap          Zap        @relation(fields: [zapId], references: [id], onDelete: Cascade)
-  actionTypeId String
-  metadata     Json       @default("{}")
-  type         ActionType @relation(fields: [actionTypeId], references: [id])
-  sortingOrder Int        @default(0)
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  id          String      @id @default(cuid())
+  name        String
+  description String?
+  zapActions  ZapAction[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 
   @@map("action")
 }
 
-model ActionType {
-  id        String   @id @default(uuid())
-  name      String
-  image     String
-  actions   Action[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Trigger {
+  id          String       @id @default(cuid())
+  name        String
+  description String?
+  zapTriggers ZapTrigger[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 
-  @@map("action_type")
-}
-
-model TriggerType {
-  id        String    @id @default(uuid())
-  name      String
-  image     String
-  triggers  Trigger[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-
-  @@map("trigger_type")
+  @@map("trigger")
 }
 
 model ZapRun {
-  id           String        @id @default(uuid())
-  zapId        String
+  id           String        @id @default(cuid())
   metadata     Json?
+  zapId        String
   zap          Zap           @relation(fields: [zapId], references: [id], onDelete: Cascade)
   zapRunOutbox ZapRunOutbox?
   createdAt    DateTime      @default(now())
@@ -74,7 +75,7 @@ model ZapRun {
 }
 
 model ZapRunOutbox {
-  id        String   @id @default(uuid())
+  id        String   @id @default(cuid())
   zapRunId  String   @unique
   zapRun    ZapRun   @relation(fields: [zapRunId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())

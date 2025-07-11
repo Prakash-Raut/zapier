@@ -19,81 +19,55 @@ export type ActionModel =
 
 export type AggregateAction = {
 	_count: ActionCountAggregateOutputType | null;
-	_avg: ActionAvgAggregateOutputType | null;
-	_sum: ActionSumAggregateOutputType | null;
 	_min: ActionMinAggregateOutputType | null;
 	_max: ActionMaxAggregateOutputType | null;
 };
 
-export type ActionAvgAggregateOutputType = {
-	sortingOrder: number | null;
-};
-
-export type ActionSumAggregateOutputType = {
-	sortingOrder: number | null;
-};
-
 export type ActionMinAggregateOutputType = {
 	id: string | null;
-	zapId: string | null;
-	actionTypeId: string | null;
-	sortingOrder: number | null;
+	name: string | null;
+	description: string | null;
 	createdAt: Date | null;
 	updatedAt: Date | null;
 };
 
 export type ActionMaxAggregateOutputType = {
 	id: string | null;
-	zapId: string | null;
-	actionTypeId: string | null;
-	sortingOrder: number | null;
+	name: string | null;
+	description: string | null;
 	createdAt: Date | null;
 	updatedAt: Date | null;
 };
 
 export type ActionCountAggregateOutputType = {
 	id: number;
-	zapId: number;
-	actionTypeId: number;
-	metadata: number;
-	sortingOrder: number;
+	name: number;
+	description: number;
 	createdAt: number;
 	updatedAt: number;
 	_all: number;
 };
 
-export type ActionAvgAggregateInputType = {
-	sortingOrder?: true;
-};
-
-export type ActionSumAggregateInputType = {
-	sortingOrder?: true;
-};
-
 export type ActionMinAggregateInputType = {
 	id?: true;
-	zapId?: true;
-	actionTypeId?: true;
-	sortingOrder?: true;
+	name?: true;
+	description?: true;
 	createdAt?: true;
 	updatedAt?: true;
 };
 
 export type ActionMaxAggregateInputType = {
 	id?: true;
-	zapId?: true;
-	actionTypeId?: true;
-	sortingOrder?: true;
+	name?: true;
+	description?: true;
 	createdAt?: true;
 	updatedAt?: true;
 };
 
 export type ActionCountAggregateInputType = {
 	id?: true;
-	zapId?: true;
-	actionTypeId?: true;
-	metadata?: true;
-	sortingOrder?: true;
+	name?: true;
+	description?: true;
 	createdAt?: true;
 	updatedAt?: true;
 	_all?: true;
@@ -142,18 +116,6 @@ export type ActionAggregateArgs<
 	/**
 	 * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
 	 *
-	 * Select which fields to average
-	 **/
-	_avg?: ActionAvgAggregateInputType;
-	/**
-	 * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-	 *
-	 * Select which fields to sum
-	 **/
-	_sum?: ActionSumAggregateInputType;
-	/**
-	 * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-	 *
 	 * Select which fields to find the minimum value
 	 **/
 	_min?: ActionMinAggregateInputType;
@@ -186,23 +148,17 @@ export type ActionGroupByArgs<
 	take?: number;
 	skip?: number;
 	_count?: ActionCountAggregateInputType | true;
-	_avg?: ActionAvgAggregateInputType;
-	_sum?: ActionSumAggregateInputType;
 	_min?: ActionMinAggregateInputType;
 	_max?: ActionMaxAggregateInputType;
 };
 
 export type ActionGroupByOutputType = {
 	id: string;
-	zapId: string;
-	actionTypeId: string;
-	metadata: runtime.JsonValue;
-	sortingOrder: number;
+	name: string;
+	description: string | null;
 	createdAt: Date;
 	updatedAt: Date;
 	_count: ActionCountAggregateOutputType | null;
-	_avg: ActionAvgAggregateOutputType | null;
-	_sum: ActionSumAggregateOutputType | null;
 	_min: ActionMinAggregateOutputType | null;
 	_max: ActionMaxAggregateOutputType | null;
 };
@@ -225,29 +181,20 @@ export type ActionWhereInput = {
 	OR?: Prisma.ActionWhereInput[];
 	NOT?: Prisma.ActionWhereInput | Prisma.ActionWhereInput[];
 	id?: Prisma.StringFilter<"Action"> | string;
-	zapId?: Prisma.StringFilter<"Action"> | string;
-	actionTypeId?: Prisma.StringFilter<"Action"> | string;
-	metadata?: Prisma.JsonFilter<"Action">;
-	sortingOrder?: Prisma.IntFilter<"Action"> | number;
+	name?: Prisma.StringFilter<"Action"> | string;
+	description?: Prisma.StringNullableFilter<"Action"> | string | null;
 	createdAt?: Prisma.DateTimeFilter<"Action"> | Date | string;
 	updatedAt?: Prisma.DateTimeFilter<"Action"> | Date | string;
-	zap?: Prisma.XOR<Prisma.ZapScalarRelationFilter, Prisma.ZapWhereInput>;
-	type?: Prisma.XOR<
-		Prisma.ActionTypeScalarRelationFilter,
-		Prisma.ActionTypeWhereInput
-	>;
+	zapActions?: Prisma.ZapActionListRelationFilter;
 };
 
 export type ActionOrderByWithRelationInput = {
 	id?: Prisma.SortOrder;
-	zapId?: Prisma.SortOrder;
-	actionTypeId?: Prisma.SortOrder;
-	metadata?: Prisma.SortOrder;
-	sortingOrder?: Prisma.SortOrder;
+	name?: Prisma.SortOrder;
+	description?: Prisma.SortOrderInput | Prisma.SortOrder;
 	createdAt?: Prisma.SortOrder;
 	updatedAt?: Prisma.SortOrder;
-	zap?: Prisma.ZapOrderByWithRelationInput;
-	type?: Prisma.ActionTypeOrderByWithRelationInput;
+	zapActions?: Prisma.ZapActionOrderByRelationAggregateInput;
 };
 
 export type ActionWhereUniqueInput = Prisma.AtLeast<
@@ -256,34 +203,24 @@ export type ActionWhereUniqueInput = Prisma.AtLeast<
 		AND?: Prisma.ActionWhereInput | Prisma.ActionWhereInput[];
 		OR?: Prisma.ActionWhereInput[];
 		NOT?: Prisma.ActionWhereInput | Prisma.ActionWhereInput[];
-		zapId?: Prisma.StringFilter<"Action"> | string;
-		actionTypeId?: Prisma.StringFilter<"Action"> | string;
-		metadata?: Prisma.JsonFilter<"Action">;
-		sortingOrder?: Prisma.IntFilter<"Action"> | number;
+		name?: Prisma.StringFilter<"Action"> | string;
+		description?: Prisma.StringNullableFilter<"Action"> | string | null;
 		createdAt?: Prisma.DateTimeFilter<"Action"> | Date | string;
 		updatedAt?: Prisma.DateTimeFilter<"Action"> | Date | string;
-		zap?: Prisma.XOR<Prisma.ZapScalarRelationFilter, Prisma.ZapWhereInput>;
-		type?: Prisma.XOR<
-			Prisma.ActionTypeScalarRelationFilter,
-			Prisma.ActionTypeWhereInput
-		>;
+		zapActions?: Prisma.ZapActionListRelationFilter;
 	},
 	"id"
 >;
 
 export type ActionOrderByWithAggregationInput = {
 	id?: Prisma.SortOrder;
-	zapId?: Prisma.SortOrder;
-	actionTypeId?: Prisma.SortOrder;
-	metadata?: Prisma.SortOrder;
-	sortingOrder?: Prisma.SortOrder;
+	name?: Prisma.SortOrder;
+	description?: Prisma.SortOrderInput | Prisma.SortOrder;
 	createdAt?: Prisma.SortOrder;
 	updatedAt?: Prisma.SortOrder;
 	_count?: Prisma.ActionCountOrderByAggregateInput;
-	_avg?: Prisma.ActionAvgOrderByAggregateInput;
 	_max?: Prisma.ActionMaxOrderByAggregateInput;
 	_min?: Prisma.ActionMinOrderByAggregateInput;
-	_sum?: Prisma.ActionSumOrderByAggregateInput;
 };
 
 export type ActionScalarWhereWithAggregatesInput = {
@@ -295,509 +232,226 @@ export type ActionScalarWhereWithAggregatesInput = {
 		| Prisma.ActionScalarWhereWithAggregatesInput
 		| Prisma.ActionScalarWhereWithAggregatesInput[];
 	id?: Prisma.StringWithAggregatesFilter<"Action"> | string;
-	zapId?: Prisma.StringWithAggregatesFilter<"Action"> | string;
-	actionTypeId?: Prisma.StringWithAggregatesFilter<"Action"> | string;
-	metadata?: Prisma.JsonWithAggregatesFilter<"Action">;
-	sortingOrder?: Prisma.IntWithAggregatesFilter<"Action"> | number;
+	name?: Prisma.StringWithAggregatesFilter<"Action"> | string;
+	description?:
+		| Prisma.StringNullableWithAggregatesFilter<"Action">
+		| string
+		| null;
 	createdAt?: Prisma.DateTimeWithAggregatesFilter<"Action"> | Date | string;
 	updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Action"> | Date | string;
 };
 
 export type ActionCreateInput = {
 	id?: string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	sortingOrder?: number;
+	name: string;
+	description?: string | null;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
-	zap: Prisma.ZapCreateNestedOneWithoutActionsInput;
-	type: Prisma.ActionTypeCreateNestedOneWithoutActionsInput;
+	zapActions?: Prisma.ZapActionCreateNestedManyWithoutTypeInput;
 };
 
 export type ActionUncheckedCreateInput = {
 	id?: string;
-	zapId: string;
-	actionTypeId: string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	sortingOrder?: number;
+	name: string;
+	description?: string | null;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
+	zapActions?: Prisma.ZapActionUncheckedCreateNestedManyWithoutTypeInput;
 };
 
 export type ActionUpdateInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	sortingOrder?: Prisma.IntFieldUpdateOperationsInput | number;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-	zap?: Prisma.ZapUpdateOneRequiredWithoutActionsNestedInput;
-	type?: Prisma.ActionTypeUpdateOneRequiredWithoutActionsNestedInput;
+	zapActions?: Prisma.ZapActionUpdateManyWithoutTypeNestedInput;
 };
 
 export type ActionUncheckedUpdateInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	zapId?: Prisma.StringFieldUpdateOperationsInput | string;
-	actionTypeId?: Prisma.StringFieldUpdateOperationsInput | string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	sortingOrder?: Prisma.IntFieldUpdateOperationsInput | number;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+	zapActions?: Prisma.ZapActionUncheckedUpdateManyWithoutTypeNestedInput;
 };
 
 export type ActionCreateManyInput = {
 	id?: string;
-	zapId: string;
-	actionTypeId: string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	sortingOrder?: number;
+	name: string;
+	description?: string | null;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
 };
 
 export type ActionUpdateManyMutationInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	sortingOrder?: Prisma.IntFieldUpdateOperationsInput | number;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
 export type ActionUncheckedUpdateManyInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	zapId?: Prisma.StringFieldUpdateOperationsInput | string;
-	actionTypeId?: Prisma.StringFieldUpdateOperationsInput | string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	sortingOrder?: Prisma.IntFieldUpdateOperationsInput | number;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
-export type ActionListRelationFilter = {
-	every?: Prisma.ActionWhereInput;
-	some?: Prisma.ActionWhereInput;
-	none?: Prisma.ActionWhereInput;
-};
-
-export type ActionOrderByRelationAggregateInput = {
-	_count?: Prisma.SortOrder;
+export type ActionScalarRelationFilter = {
+	is?: Prisma.ActionWhereInput;
+	isNot?: Prisma.ActionWhereInput;
 };
 
 export type ActionCountOrderByAggregateInput = {
 	id?: Prisma.SortOrder;
-	zapId?: Prisma.SortOrder;
-	actionTypeId?: Prisma.SortOrder;
-	metadata?: Prisma.SortOrder;
-	sortingOrder?: Prisma.SortOrder;
+	name?: Prisma.SortOrder;
+	description?: Prisma.SortOrder;
 	createdAt?: Prisma.SortOrder;
 	updatedAt?: Prisma.SortOrder;
 };
 
-export type ActionAvgOrderByAggregateInput = {
-	sortingOrder?: Prisma.SortOrder;
-};
-
 export type ActionMaxOrderByAggregateInput = {
 	id?: Prisma.SortOrder;
-	zapId?: Prisma.SortOrder;
-	actionTypeId?: Prisma.SortOrder;
-	sortingOrder?: Prisma.SortOrder;
+	name?: Prisma.SortOrder;
+	description?: Prisma.SortOrder;
 	createdAt?: Prisma.SortOrder;
 	updatedAt?: Prisma.SortOrder;
 };
 
 export type ActionMinOrderByAggregateInput = {
 	id?: Prisma.SortOrder;
-	zapId?: Prisma.SortOrder;
-	actionTypeId?: Prisma.SortOrder;
-	sortingOrder?: Prisma.SortOrder;
+	name?: Prisma.SortOrder;
+	description?: Prisma.SortOrder;
 	createdAt?: Prisma.SortOrder;
 	updatedAt?: Prisma.SortOrder;
 };
 
-export type ActionSumOrderByAggregateInput = {
-	sortingOrder?: Prisma.SortOrder;
+export type ActionCreateNestedOneWithoutZapActionsInput = {
+	create?: Prisma.XOR<
+		Prisma.ActionCreateWithoutZapActionsInput,
+		Prisma.ActionUncheckedCreateWithoutZapActionsInput
+	>;
+	connectOrCreate?: Prisma.ActionCreateOrConnectWithoutZapActionsInput;
+	connect?: Prisma.ActionWhereUniqueInput;
 };
 
-export type ActionCreateNestedManyWithoutZapInput = {
-	create?:
-		| Prisma.XOR<
-				Prisma.ActionCreateWithoutZapInput,
-				Prisma.ActionUncheckedCreateWithoutZapInput
-		  >
-		| Prisma.ActionCreateWithoutZapInput[]
-		| Prisma.ActionUncheckedCreateWithoutZapInput[];
-	connectOrCreate?:
-		| Prisma.ActionCreateOrConnectWithoutZapInput
-		| Prisma.ActionCreateOrConnectWithoutZapInput[];
-	createMany?: Prisma.ActionCreateManyZapInputEnvelope;
-	connect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[];
-};
-
-export type ActionUncheckedCreateNestedManyWithoutZapInput = {
-	create?:
-		| Prisma.XOR<
-				Prisma.ActionCreateWithoutZapInput,
-				Prisma.ActionUncheckedCreateWithoutZapInput
-		  >
-		| Prisma.ActionCreateWithoutZapInput[]
-		| Prisma.ActionUncheckedCreateWithoutZapInput[];
-	connectOrCreate?:
-		| Prisma.ActionCreateOrConnectWithoutZapInput
-		| Prisma.ActionCreateOrConnectWithoutZapInput[];
-	createMany?: Prisma.ActionCreateManyZapInputEnvelope;
-	connect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[];
-};
-
-export type ActionUpdateManyWithoutZapNestedInput = {
-	create?:
-		| Prisma.XOR<
-				Prisma.ActionCreateWithoutZapInput,
-				Prisma.ActionUncheckedCreateWithoutZapInput
-		  >
-		| Prisma.ActionCreateWithoutZapInput[]
-		| Prisma.ActionUncheckedCreateWithoutZapInput[];
-	connectOrCreate?:
-		| Prisma.ActionCreateOrConnectWithoutZapInput
-		| Prisma.ActionCreateOrConnectWithoutZapInput[];
-	upsert?:
-		| Prisma.ActionUpsertWithWhereUniqueWithoutZapInput
-		| Prisma.ActionUpsertWithWhereUniqueWithoutZapInput[];
-	createMany?: Prisma.ActionCreateManyZapInputEnvelope;
-	set?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[];
-	disconnect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[];
-	delete?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[];
-	connect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[];
-	update?:
-		| Prisma.ActionUpdateWithWhereUniqueWithoutZapInput
-		| Prisma.ActionUpdateWithWhereUniqueWithoutZapInput[];
-	updateMany?:
-		| Prisma.ActionUpdateManyWithWhereWithoutZapInput
-		| Prisma.ActionUpdateManyWithWhereWithoutZapInput[];
-	deleteMany?: Prisma.ActionScalarWhereInput | Prisma.ActionScalarWhereInput[];
-};
-
-export type ActionUncheckedUpdateManyWithoutZapNestedInput = {
-	create?:
-		| Prisma.XOR<
-				Prisma.ActionCreateWithoutZapInput,
-				Prisma.ActionUncheckedCreateWithoutZapInput
-		  >
-		| Prisma.ActionCreateWithoutZapInput[]
-		| Prisma.ActionUncheckedCreateWithoutZapInput[];
-	connectOrCreate?:
-		| Prisma.ActionCreateOrConnectWithoutZapInput
-		| Prisma.ActionCreateOrConnectWithoutZapInput[];
-	upsert?:
-		| Prisma.ActionUpsertWithWhereUniqueWithoutZapInput
-		| Prisma.ActionUpsertWithWhereUniqueWithoutZapInput[];
-	createMany?: Prisma.ActionCreateManyZapInputEnvelope;
-	set?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[];
-	disconnect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[];
-	delete?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[];
-	connect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[];
-	update?:
-		| Prisma.ActionUpdateWithWhereUniqueWithoutZapInput
-		| Prisma.ActionUpdateWithWhereUniqueWithoutZapInput[];
-	updateMany?:
-		| Prisma.ActionUpdateManyWithWhereWithoutZapInput
-		| Prisma.ActionUpdateManyWithWhereWithoutZapInput[];
-	deleteMany?: Prisma.ActionScalarWhereInput | Prisma.ActionScalarWhereInput[];
-};
-
-export type IntFieldUpdateOperationsInput = {
-	set?: number;
-	increment?: number;
-	decrement?: number;
-	multiply?: number;
-	divide?: number;
-};
-
-export type ActionCreateNestedManyWithoutTypeInput = {
-	create?:
-		| Prisma.XOR<
-				Prisma.ActionCreateWithoutTypeInput,
-				Prisma.ActionUncheckedCreateWithoutTypeInput
-		  >
-		| Prisma.ActionCreateWithoutTypeInput[]
-		| Prisma.ActionUncheckedCreateWithoutTypeInput[];
-	connectOrCreate?:
-		| Prisma.ActionCreateOrConnectWithoutTypeInput
-		| Prisma.ActionCreateOrConnectWithoutTypeInput[];
-	createMany?: Prisma.ActionCreateManyTypeInputEnvelope;
-	connect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[];
-};
-
-export type ActionUncheckedCreateNestedManyWithoutTypeInput = {
-	create?:
-		| Prisma.XOR<
-				Prisma.ActionCreateWithoutTypeInput,
-				Prisma.ActionUncheckedCreateWithoutTypeInput
-		  >
-		| Prisma.ActionCreateWithoutTypeInput[]
-		| Prisma.ActionUncheckedCreateWithoutTypeInput[];
-	connectOrCreate?:
-		| Prisma.ActionCreateOrConnectWithoutTypeInput
-		| Prisma.ActionCreateOrConnectWithoutTypeInput[];
-	createMany?: Prisma.ActionCreateManyTypeInputEnvelope;
-	connect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[];
-};
-
-export type ActionUpdateManyWithoutTypeNestedInput = {
-	create?:
-		| Prisma.XOR<
-				Prisma.ActionCreateWithoutTypeInput,
-				Prisma.ActionUncheckedCreateWithoutTypeInput
-		  >
-		| Prisma.ActionCreateWithoutTypeInput[]
-		| Prisma.ActionUncheckedCreateWithoutTypeInput[];
-	connectOrCreate?:
-		| Prisma.ActionCreateOrConnectWithoutTypeInput
-		| Prisma.ActionCreateOrConnectWithoutTypeInput[];
-	upsert?:
-		| Prisma.ActionUpsertWithWhereUniqueWithoutTypeInput
-		| Prisma.ActionUpsertWithWhereUniqueWithoutTypeInput[];
-	createMany?: Prisma.ActionCreateManyTypeInputEnvelope;
-	set?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[];
-	disconnect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[];
-	delete?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[];
-	connect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[];
-	update?:
-		| Prisma.ActionUpdateWithWhereUniqueWithoutTypeInput
-		| Prisma.ActionUpdateWithWhereUniqueWithoutTypeInput[];
-	updateMany?:
-		| Prisma.ActionUpdateManyWithWhereWithoutTypeInput
-		| Prisma.ActionUpdateManyWithWhereWithoutTypeInput[];
-	deleteMany?: Prisma.ActionScalarWhereInput | Prisma.ActionScalarWhereInput[];
-};
-
-export type ActionUncheckedUpdateManyWithoutTypeNestedInput = {
-	create?:
-		| Prisma.XOR<
-				Prisma.ActionCreateWithoutTypeInput,
-				Prisma.ActionUncheckedCreateWithoutTypeInput
-		  >
-		| Prisma.ActionCreateWithoutTypeInput[]
-		| Prisma.ActionUncheckedCreateWithoutTypeInput[];
-	connectOrCreate?:
-		| Prisma.ActionCreateOrConnectWithoutTypeInput
-		| Prisma.ActionCreateOrConnectWithoutTypeInput[];
-	upsert?:
-		| Prisma.ActionUpsertWithWhereUniqueWithoutTypeInput
-		| Prisma.ActionUpsertWithWhereUniqueWithoutTypeInput[];
-	createMany?: Prisma.ActionCreateManyTypeInputEnvelope;
-	set?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[];
-	disconnect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[];
-	delete?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[];
-	connect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[];
-	update?:
-		| Prisma.ActionUpdateWithWhereUniqueWithoutTypeInput
-		| Prisma.ActionUpdateWithWhereUniqueWithoutTypeInput[];
-	updateMany?:
-		| Prisma.ActionUpdateManyWithWhereWithoutTypeInput
-		| Prisma.ActionUpdateManyWithWhereWithoutTypeInput[];
-	deleteMany?: Prisma.ActionScalarWhereInput | Prisma.ActionScalarWhereInput[];
-};
-
-export type ActionCreateWithoutZapInput = {
-	id?: string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	sortingOrder?: number;
-	createdAt?: Date | string;
-	updatedAt?: Date | string;
-	type: Prisma.ActionTypeCreateNestedOneWithoutActionsInput;
-};
-
-export type ActionUncheckedCreateWithoutZapInput = {
-	id?: string;
-	actionTypeId: string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	sortingOrder?: number;
-	createdAt?: Date | string;
-	updatedAt?: Date | string;
-};
-
-export type ActionCreateOrConnectWithoutZapInput = {
-	where: Prisma.ActionWhereUniqueInput;
-	create: Prisma.XOR<
-		Prisma.ActionCreateWithoutZapInput,
-		Prisma.ActionUncheckedCreateWithoutZapInput
+export type ActionUpdateOneRequiredWithoutZapActionsNestedInput = {
+	create?: Prisma.XOR<
+		Prisma.ActionCreateWithoutZapActionsInput,
+		Prisma.ActionUncheckedCreateWithoutZapActionsInput
+	>;
+	connectOrCreate?: Prisma.ActionCreateOrConnectWithoutZapActionsInput;
+	upsert?: Prisma.ActionUpsertWithoutZapActionsInput;
+	connect?: Prisma.ActionWhereUniqueInput;
+	update?: Prisma.XOR<
+		Prisma.XOR<
+			Prisma.ActionUpdateToOneWithWhereWithoutZapActionsInput,
+			Prisma.ActionUpdateWithoutZapActionsInput
+		>,
+		Prisma.ActionUncheckedUpdateWithoutZapActionsInput
 	>;
 };
 
-export type ActionCreateManyZapInputEnvelope = {
-	data: Prisma.ActionCreateManyZapInput | Prisma.ActionCreateManyZapInput[];
-	skipDuplicates?: boolean;
+export type ActionCreateWithoutZapActionsInput = {
+	id?: string;
+	name: string;
+	description?: string | null;
+	createdAt?: Date | string;
+	updatedAt?: Date | string;
 };
 
-export type ActionUpsertWithWhereUniqueWithoutZapInput = {
+export type ActionUncheckedCreateWithoutZapActionsInput = {
+	id?: string;
+	name: string;
+	description?: string | null;
+	createdAt?: Date | string;
+	updatedAt?: Date | string;
+};
+
+export type ActionCreateOrConnectWithoutZapActionsInput = {
 	where: Prisma.ActionWhereUniqueInput;
+	create: Prisma.XOR<
+		Prisma.ActionCreateWithoutZapActionsInput,
+		Prisma.ActionUncheckedCreateWithoutZapActionsInput
+	>;
+};
+
+export type ActionUpsertWithoutZapActionsInput = {
 	update: Prisma.XOR<
-		Prisma.ActionUpdateWithoutZapInput,
-		Prisma.ActionUncheckedUpdateWithoutZapInput
+		Prisma.ActionUpdateWithoutZapActionsInput,
+		Prisma.ActionUncheckedUpdateWithoutZapActionsInput
 	>;
 	create: Prisma.XOR<
-		Prisma.ActionCreateWithoutZapInput,
-		Prisma.ActionUncheckedCreateWithoutZapInput
+		Prisma.ActionCreateWithoutZapActionsInput,
+		Prisma.ActionUncheckedCreateWithoutZapActionsInput
 	>;
+	where?: Prisma.ActionWhereInput;
 };
 
-export type ActionUpdateWithWhereUniqueWithoutZapInput = {
-	where: Prisma.ActionWhereUniqueInput;
+export type ActionUpdateToOneWithWhereWithoutZapActionsInput = {
+	where?: Prisma.ActionWhereInput;
 	data: Prisma.XOR<
-		Prisma.ActionUpdateWithoutZapInput,
-		Prisma.ActionUncheckedUpdateWithoutZapInput
+		Prisma.ActionUpdateWithoutZapActionsInput,
+		Prisma.ActionUncheckedUpdateWithoutZapActionsInput
 	>;
 };
 
-export type ActionUpdateManyWithWhereWithoutZapInput = {
-	where: Prisma.ActionScalarWhereInput;
-	data: Prisma.XOR<
-		Prisma.ActionUpdateManyMutationInput,
-		Prisma.ActionUncheckedUpdateManyWithoutZapInput
-	>;
-};
-
-export type ActionScalarWhereInput = {
-	AND?: Prisma.ActionScalarWhereInput | Prisma.ActionScalarWhereInput[];
-	OR?: Prisma.ActionScalarWhereInput[];
-	NOT?: Prisma.ActionScalarWhereInput | Prisma.ActionScalarWhereInput[];
-	id?: Prisma.StringFilter<"Action"> | string;
-	zapId?: Prisma.StringFilter<"Action"> | string;
-	actionTypeId?: Prisma.StringFilter<"Action"> | string;
-	metadata?: Prisma.JsonFilter<"Action">;
-	sortingOrder?: Prisma.IntFilter<"Action"> | number;
-	createdAt?: Prisma.DateTimeFilter<"Action"> | Date | string;
-	updatedAt?: Prisma.DateTimeFilter<"Action"> | Date | string;
-};
-
-export type ActionCreateWithoutTypeInput = {
-	id?: string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	sortingOrder?: number;
-	createdAt?: Date | string;
-	updatedAt?: Date | string;
-	zap: Prisma.ZapCreateNestedOneWithoutActionsInput;
-};
-
-export type ActionUncheckedCreateWithoutTypeInput = {
-	id?: string;
-	zapId: string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	sortingOrder?: number;
-	createdAt?: Date | string;
-	updatedAt?: Date | string;
-};
-
-export type ActionCreateOrConnectWithoutTypeInput = {
-	where: Prisma.ActionWhereUniqueInput;
-	create: Prisma.XOR<
-		Prisma.ActionCreateWithoutTypeInput,
-		Prisma.ActionUncheckedCreateWithoutTypeInput
-	>;
-};
-
-export type ActionCreateManyTypeInputEnvelope = {
-	data: Prisma.ActionCreateManyTypeInput | Prisma.ActionCreateManyTypeInput[];
-	skipDuplicates?: boolean;
-};
-
-export type ActionUpsertWithWhereUniqueWithoutTypeInput = {
-	where: Prisma.ActionWhereUniqueInput;
-	update: Prisma.XOR<
-		Prisma.ActionUpdateWithoutTypeInput,
-		Prisma.ActionUncheckedUpdateWithoutTypeInput
-	>;
-	create: Prisma.XOR<
-		Prisma.ActionCreateWithoutTypeInput,
-		Prisma.ActionUncheckedCreateWithoutTypeInput
-	>;
-};
-
-export type ActionUpdateWithWhereUniqueWithoutTypeInput = {
-	where: Prisma.ActionWhereUniqueInput;
-	data: Prisma.XOR<
-		Prisma.ActionUpdateWithoutTypeInput,
-		Prisma.ActionUncheckedUpdateWithoutTypeInput
-	>;
-};
-
-export type ActionUpdateManyWithWhereWithoutTypeInput = {
-	where: Prisma.ActionScalarWhereInput;
-	data: Prisma.XOR<
-		Prisma.ActionUpdateManyMutationInput,
-		Prisma.ActionUncheckedUpdateManyWithoutTypeInput
-	>;
-};
-
-export type ActionCreateManyZapInput = {
-	id?: string;
-	actionTypeId: string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	sortingOrder?: number;
-	createdAt?: Date | string;
-	updatedAt?: Date | string;
-};
-
-export type ActionUpdateWithoutZapInput = {
+export type ActionUpdateWithoutZapActionsInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	sortingOrder?: Prisma.IntFieldUpdateOperationsInput | number;
-	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-	type?: Prisma.ActionTypeUpdateOneRequiredWithoutActionsNestedInput;
-};
-
-export type ActionUncheckedUpdateWithoutZapInput = {
-	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	actionTypeId?: Prisma.StringFieldUpdateOperationsInput | string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	sortingOrder?: Prisma.IntFieldUpdateOperationsInput | number;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
-export type ActionUncheckedUpdateManyWithoutZapInput = {
+export type ActionUncheckedUpdateWithoutZapActionsInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	actionTypeId?: Prisma.StringFieldUpdateOperationsInput | string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	sortingOrder?: Prisma.IntFieldUpdateOperationsInput | number;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
-export type ActionCreateManyTypeInput = {
-	id?: string;
-	zapId: string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	sortingOrder?: number;
-	createdAt?: Date | string;
-	updatedAt?: Date | string;
+/**
+ * Count Type ActionCountOutputType
+ */
+
+export type ActionCountOutputType = {
+	zapActions: number;
 };
 
-export type ActionUpdateWithoutTypeInput = {
-	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	sortingOrder?: Prisma.IntFieldUpdateOperationsInput | number;
-	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-	zap?: Prisma.ZapUpdateOneRequiredWithoutActionsNestedInput;
+export type ActionCountOutputTypeSelect<
+	ExtArgs extends
+		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+	zapActions?: boolean | ActionCountOutputTypeCountZapActionsArgs;
 };
 
-export type ActionUncheckedUpdateWithoutTypeInput = {
-	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	zapId?: Prisma.StringFieldUpdateOperationsInput | string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	sortingOrder?: Prisma.IntFieldUpdateOperationsInput | number;
-	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+/**
+ * ActionCountOutputType without action
+ */
+export type ActionCountOutputTypeDefaultArgs<
+	ExtArgs extends
+		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+	/**
+	 * Select specific fields to fetch from the ActionCountOutputType
+	 */
+	select?: Prisma.ActionCountOutputTypeSelect<ExtArgs> | null;
 };
 
-export type ActionUncheckedUpdateManyWithoutTypeInput = {
-	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	zapId?: Prisma.StringFieldUpdateOperationsInput | string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	sortingOrder?: Prisma.IntFieldUpdateOperationsInput | number;
-	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+/**
+ * ActionCountOutputType without action
+ */
+export type ActionCountOutputTypeCountZapActionsArgs<
+	ExtArgs extends
+		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+	where?: Prisma.ZapActionWhereInput;
 };
 
 export type ActionSelect<
@@ -806,14 +460,12 @@ export type ActionSelect<
 > = runtime.Types.Extensions.GetSelect<
 	{
 		id?: boolean;
-		zapId?: boolean;
-		actionTypeId?: boolean;
-		metadata?: boolean;
-		sortingOrder?: boolean;
+		name?: boolean;
+		description?: boolean;
 		createdAt?: boolean;
 		updatedAt?: boolean;
-		zap?: boolean | Prisma.ZapDefaultArgs<ExtArgs>;
-		type?: boolean | Prisma.ActionTypeDefaultArgs<ExtArgs>;
+		zapActions?: boolean | Prisma.Action$zapActionsArgs<ExtArgs>;
+		_count?: boolean | Prisma.ActionCountOutputTypeDefaultArgs<ExtArgs>;
 	},
 	ExtArgs["result"]["action"]
 >;
@@ -824,14 +476,10 @@ export type ActionSelectCreateManyAndReturn<
 > = runtime.Types.Extensions.GetSelect<
 	{
 		id?: boolean;
-		zapId?: boolean;
-		actionTypeId?: boolean;
-		metadata?: boolean;
-		sortingOrder?: boolean;
+		name?: boolean;
+		description?: boolean;
 		createdAt?: boolean;
 		updatedAt?: boolean;
-		zap?: boolean | Prisma.ZapDefaultArgs<ExtArgs>;
-		type?: boolean | Prisma.ActionTypeDefaultArgs<ExtArgs>;
 	},
 	ExtArgs["result"]["action"]
 >;
@@ -842,24 +490,18 @@ export type ActionSelectUpdateManyAndReturn<
 > = runtime.Types.Extensions.GetSelect<
 	{
 		id?: boolean;
-		zapId?: boolean;
-		actionTypeId?: boolean;
-		metadata?: boolean;
-		sortingOrder?: boolean;
+		name?: boolean;
+		description?: boolean;
 		createdAt?: boolean;
 		updatedAt?: boolean;
-		zap?: boolean | Prisma.ZapDefaultArgs<ExtArgs>;
-		type?: boolean | Prisma.ActionTypeDefaultArgs<ExtArgs>;
 	},
 	ExtArgs["result"]["action"]
 >;
 
 export type ActionSelectScalar = {
 	id?: boolean;
-	zapId?: boolean;
-	actionTypeId?: boolean;
-	metadata?: boolean;
-	sortingOrder?: boolean;
+	name?: boolean;
+	description?: boolean;
 	createdAt?: boolean;
 	updatedAt?: boolean;
 };
@@ -868,36 +510,24 @@ export type ActionOmit<
 	ExtArgs extends
 		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetOmit<
-	| "id"
-	| "zapId"
-	| "actionTypeId"
-	| "metadata"
-	| "sortingOrder"
-	| "createdAt"
-	| "updatedAt",
+	"id" | "name" | "description" | "createdAt" | "updatedAt",
 	ExtArgs["result"]["action"]
 >;
 export type ActionInclude<
 	ExtArgs extends
 		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-	zap?: boolean | Prisma.ZapDefaultArgs<ExtArgs>;
-	type?: boolean | Prisma.ActionTypeDefaultArgs<ExtArgs>;
+	zapActions?: boolean | Prisma.Action$zapActionsArgs<ExtArgs>;
+	_count?: boolean | Prisma.ActionCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type ActionIncludeCreateManyAndReturn<
 	ExtArgs extends
 		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-> = {
-	zap?: boolean | Prisma.ZapDefaultArgs<ExtArgs>;
-	type?: boolean | Prisma.ActionTypeDefaultArgs<ExtArgs>;
-};
+> = {};
 export type ActionIncludeUpdateManyAndReturn<
 	ExtArgs extends
 		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-> = {
-	zap?: boolean | Prisma.ZapDefaultArgs<ExtArgs>;
-	type?: boolean | Prisma.ActionTypeDefaultArgs<ExtArgs>;
-};
+> = {};
 
 export type $ActionPayload<
 	ExtArgs extends
@@ -905,16 +535,13 @@ export type $ActionPayload<
 > = {
 	name: "Action";
 	objects: {
-		zap: Prisma.$ZapPayload<ExtArgs>;
-		type: Prisma.$ActionTypePayload<ExtArgs>;
+		zapActions: Prisma.$ZapActionPayload<ExtArgs>[];
 	};
 	scalars: runtime.Types.Extensions.GetPayloadResult<
 		{
 			id: string;
-			zapId: string;
-			actionTypeId: string;
-			metadata: runtime.JsonValue;
-			sortingOrder: number;
+			name: string;
+			description: string | null;
 			createdAt: Date;
 			updatedAt: Date;
 		},
@@ -1467,33 +1094,16 @@ export interface Prisma__ActionClient<
 	GlobalOmitOptions = {},
 > extends Prisma.PrismaPromise<T> {
 	readonly [Symbol.toStringTag]: "PrismaPromise";
-	zap<T extends Prisma.ZapDefaultArgs<ExtArgs> = {}>(
-		args?: Prisma.Subset<T, Prisma.ZapDefaultArgs<ExtArgs>>,
-	): Prisma.Prisma__ZapClient<
+	zapActions<T extends Prisma.Action$zapActionsArgs<ExtArgs> = {}>(
+		args?: Prisma.Subset<T, Prisma.Action$zapActionsArgs<ExtArgs>>,
+	): Prisma.PrismaPromise<
 		| runtime.Types.Result.GetResult<
-				Prisma.$ZapPayload<ExtArgs>,
+				Prisma.$ZapActionPayload<ExtArgs>,
 				T,
-				"findUniqueOrThrow",
+				"findMany",
 				GlobalOmitOptions
 		  >
-		| Null,
-		Null,
-		ExtArgs,
-		GlobalOmitOptions
-	>;
-	type<T extends Prisma.ActionTypeDefaultArgs<ExtArgs> = {}>(
-		args?: Prisma.Subset<T, Prisma.ActionTypeDefaultArgs<ExtArgs>>,
-	): Prisma.Prisma__ActionTypeClient<
-		| runtime.Types.Result.GetResult<
-				Prisma.$ActionTypePayload<ExtArgs>,
-				T,
-				"findUniqueOrThrow",
-				GlobalOmitOptions
-		  >
-		| Null,
-		Null,
-		ExtArgs,
-		GlobalOmitOptions
+		| Null
 	>;
 	/**
 	 * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1538,10 +1148,8 @@ export interface Prisma__ActionClient<
  */
 export interface ActionFieldRefs {
 	readonly id: Prisma.FieldRef<"Action", "String">;
-	readonly zapId: Prisma.FieldRef<"Action", "String">;
-	readonly actionTypeId: Prisma.FieldRef<"Action", "String">;
-	readonly metadata: Prisma.FieldRef<"Action", "Json">;
-	readonly sortingOrder: Prisma.FieldRef<"Action", "Int">;
+	readonly name: Prisma.FieldRef<"Action", "String">;
+	readonly description: Prisma.FieldRef<"Action", "String">;
 	readonly createdAt: Prisma.FieldRef<"Action", "DateTime">;
 	readonly updatedAt: Prisma.FieldRef<"Action", "DateTime">;
 }
@@ -1822,10 +1430,6 @@ export type ActionCreateManyAndReturnArgs<
 	 */
 	data: Prisma.ActionCreateManyInput | Prisma.ActionCreateManyInput[];
 	skipDuplicates?: boolean;
-	/**
-	 * Choose, which related nodes to fetch as well
-	 */
-	include?: Prisma.ActionIncludeCreateManyAndReturn<ExtArgs> | null;
 };
 
 /**
@@ -1911,10 +1515,6 @@ export type ActionUpdateManyAndReturnArgs<
 	 * Limit how many Actions to update.
 	 */
 	limit?: number;
-	/**
-	 * Choose, which related nodes to fetch as well
-	 */
-	include?: Prisma.ActionIncludeUpdateManyAndReturn<ExtArgs> | null;
 };
 
 /**
@@ -1996,6 +1596,37 @@ export type ActionDeleteManyArgs<
 	 * Limit how many Actions to delete.
 	 */
 	limit?: number;
+};
+
+/**
+ * Action.zapActions
+ */
+export type Action$zapActionsArgs<
+	ExtArgs extends
+		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+	/**
+	 * Select specific fields to fetch from the ZapAction
+	 */
+	select?: Prisma.ZapActionSelect<ExtArgs> | null;
+	/**
+	 * Omit specific fields from the ZapAction
+	 */
+	omit?: Prisma.ZapActionOmit<ExtArgs> | null;
+	/**
+	 * Choose, which related nodes to fetch as well
+	 */
+	include?: Prisma.ZapActionInclude<ExtArgs> | null;
+	where?: Prisma.ZapActionWhereInput;
+	orderBy?:
+		| Prisma.ZapActionOrderByWithRelationInput
+		| Prisma.ZapActionOrderByWithRelationInput[];
+	cursor?: Prisma.ZapActionWhereUniqueInput;
+	take?: number;
+	skip?: number;
+	distinct?:
+		| Prisma.ZapActionScalarFieldEnum
+		| Prisma.ZapActionScalarFieldEnum[];
 };
 
 /**

@@ -71,25 +71,25 @@ export type Verification = Prisma.VerificationModel;
  */
 export type Zap = Prisma.ZapModel;
 /**
- * Model Trigger
+ * Model ZapTrigger
  *
  */
-export type Trigger = Prisma.TriggerModel;
+export type ZapTrigger = Prisma.ZapTriggerModel;
+/**
+ * Model ZapAction
+ *
+ */
+export type ZapAction = Prisma.ZapActionModel;
 /**
  * Model Action
  *
  */
 export type Action = Prisma.ActionModel;
 /**
- * Model ActionType
+ * Model Trigger
  *
  */
-export type ActionType = Prisma.ActionTypeModel;
-/**
- * Model TriggerType
- *
- */
-export type TriggerType = Prisma.TriggerTypeModel;
+export type Trigger = Prisma.TriggerModel;
 /**
  * Model ZapRun
  *

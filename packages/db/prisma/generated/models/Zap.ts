@@ -25,24 +25,27 @@ export type AggregateZap = {
 
 export type ZapMinAggregateOutputType = {
 	id: string | null;
+	name: string | null;
+	description: string | null;
 	userId: string | null;
-	triggerId: string | null;
 	createdAt: Date | null;
 	updatedAt: Date | null;
 };
 
 export type ZapMaxAggregateOutputType = {
 	id: string | null;
+	name: string | null;
+	description: string | null;
 	userId: string | null;
-	triggerId: string | null;
 	createdAt: Date | null;
 	updatedAt: Date | null;
 };
 
 export type ZapCountAggregateOutputType = {
 	id: number;
+	name: number;
+	description: number;
 	userId: number;
-	triggerId: number;
 	createdAt: number;
 	updatedAt: number;
 	_all: number;
@@ -50,24 +53,27 @@ export type ZapCountAggregateOutputType = {
 
 export type ZapMinAggregateInputType = {
 	id?: true;
+	name?: true;
+	description?: true;
 	userId?: true;
-	triggerId?: true;
 	createdAt?: true;
 	updatedAt?: true;
 };
 
 export type ZapMaxAggregateInputType = {
 	id?: true;
+	name?: true;
+	description?: true;
 	userId?: true;
-	triggerId?: true;
 	createdAt?: true;
 	updatedAt?: true;
 };
 
 export type ZapCountAggregateInputType = {
 	id?: true;
+	name?: true;
+	description?: true;
 	userId?: true;
-	triggerId?: true;
 	createdAt?: true;
 	updatedAt?: true;
 	_all?: true;
@@ -154,8 +160,9 @@ export type ZapGroupByArgs<
 
 export type ZapGroupByOutputType = {
 	id: string;
+	name: string;
+	description: string | null;
 	userId: string;
-	triggerId: string;
 	createdAt: Date;
 	updatedAt: Date;
 	_count: ZapCountAggregateOutputType | null;
@@ -180,28 +187,30 @@ export type ZapWhereInput = {
 	OR?: Prisma.ZapWhereInput[];
 	NOT?: Prisma.ZapWhereInput | Prisma.ZapWhereInput[];
 	id?: Prisma.StringFilter<"Zap"> | string;
+	name?: Prisma.StringFilter<"Zap"> | string;
+	description?: Prisma.StringNullableFilter<"Zap"> | string | null;
 	userId?: Prisma.StringFilter<"Zap"> | string;
-	triggerId?: Prisma.StringFilter<"Zap"> | string;
 	createdAt?: Prisma.DateTimeFilter<"Zap"> | Date | string;
 	updatedAt?: Prisma.DateTimeFilter<"Zap"> | Date | string;
 	user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
-	trigger?: Prisma.XOR<
-		Prisma.TriggerNullableScalarRelationFilter,
-		Prisma.TriggerWhereInput
+	zapTrigger?: Prisma.XOR<
+		Prisma.ZapTriggerNullableScalarRelationFilter,
+		Prisma.ZapTriggerWhereInput
 	> | null;
-	actions?: Prisma.ActionListRelationFilter;
+	zapActions?: Prisma.ZapActionListRelationFilter;
 	zapRuns?: Prisma.ZapRunListRelationFilter;
 };
 
 export type ZapOrderByWithRelationInput = {
 	id?: Prisma.SortOrder;
+	name?: Prisma.SortOrder;
+	description?: Prisma.SortOrderInput | Prisma.SortOrder;
 	userId?: Prisma.SortOrder;
-	triggerId?: Prisma.SortOrder;
 	createdAt?: Prisma.SortOrder;
 	updatedAt?: Prisma.SortOrder;
 	user?: Prisma.UserOrderByWithRelationInput;
-	trigger?: Prisma.TriggerOrderByWithRelationInput;
-	actions?: Prisma.ActionOrderByRelationAggregateInput;
+	zapTrigger?: Prisma.ZapTriggerOrderByWithRelationInput;
+	zapActions?: Prisma.ZapActionOrderByRelationAggregateInput;
 	zapRuns?: Prisma.ZapRunOrderByRelationAggregateInput;
 };
 
@@ -211,16 +220,17 @@ export type ZapWhereUniqueInput = Prisma.AtLeast<
 		AND?: Prisma.ZapWhereInput | Prisma.ZapWhereInput[];
 		OR?: Prisma.ZapWhereInput[];
 		NOT?: Prisma.ZapWhereInput | Prisma.ZapWhereInput[];
+		name?: Prisma.StringFilter<"Zap"> | string;
+		description?: Prisma.StringNullableFilter<"Zap"> | string | null;
 		userId?: Prisma.StringFilter<"Zap"> | string;
-		triggerId?: Prisma.StringFilter<"Zap"> | string;
 		createdAt?: Prisma.DateTimeFilter<"Zap"> | Date | string;
 		updatedAt?: Prisma.DateTimeFilter<"Zap"> | Date | string;
 		user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
-		trigger?: Prisma.XOR<
-			Prisma.TriggerNullableScalarRelationFilter,
-			Prisma.TriggerWhereInput
+		zapTrigger?: Prisma.XOR<
+			Prisma.ZapTriggerNullableScalarRelationFilter,
+			Prisma.ZapTriggerWhereInput
 		> | null;
-		actions?: Prisma.ActionListRelationFilter;
+		zapActions?: Prisma.ZapActionListRelationFilter;
 		zapRuns?: Prisma.ZapRunListRelationFilter;
 	},
 	"id"
@@ -228,8 +238,9 @@ export type ZapWhereUniqueInput = Prisma.AtLeast<
 
 export type ZapOrderByWithAggregationInput = {
 	id?: Prisma.SortOrder;
+	name?: Prisma.SortOrder;
+	description?: Prisma.SortOrderInput | Prisma.SortOrder;
 	userId?: Prisma.SortOrder;
-	triggerId?: Prisma.SortOrder;
 	createdAt?: Prisma.SortOrder;
 	updatedAt?: Prisma.SortOrder;
 	_count?: Prisma.ZapCountOrderByAggregateInput;
@@ -246,75 +257,86 @@ export type ZapScalarWhereWithAggregatesInput = {
 		| Prisma.ZapScalarWhereWithAggregatesInput
 		| Prisma.ZapScalarWhereWithAggregatesInput[];
 	id?: Prisma.StringWithAggregatesFilter<"Zap"> | string;
+	name?: Prisma.StringWithAggregatesFilter<"Zap"> | string;
+	description?:
+		| Prisma.StringNullableWithAggregatesFilter<"Zap">
+		| string
+		| null;
 	userId?: Prisma.StringWithAggregatesFilter<"Zap"> | string;
-	triggerId?: Prisma.StringWithAggregatesFilter<"Zap"> | string;
 	createdAt?: Prisma.DateTimeWithAggregatesFilter<"Zap"> | Date | string;
 	updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Zap"> | Date | string;
 };
 
 export type ZapCreateInput = {
 	id?: string;
-	triggerId: string;
+	name: string;
+	description?: string | null;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
 	user: Prisma.UserCreateNestedOneWithoutZapsInput;
-	trigger?: Prisma.TriggerCreateNestedOneWithoutZapInput;
-	actions?: Prisma.ActionCreateNestedManyWithoutZapInput;
+	zapTrigger?: Prisma.ZapTriggerCreateNestedOneWithoutZapInput;
+	zapActions?: Prisma.ZapActionCreateNestedManyWithoutZapInput;
 	zapRuns?: Prisma.ZapRunCreateNestedManyWithoutZapInput;
 };
 
 export type ZapUncheckedCreateInput = {
 	id?: string;
+	name: string;
+	description?: string | null;
 	userId: string;
-	triggerId: string;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
-	trigger?: Prisma.TriggerUncheckedCreateNestedOneWithoutZapInput;
-	actions?: Prisma.ActionUncheckedCreateNestedManyWithoutZapInput;
+	zapTrigger?: Prisma.ZapTriggerUncheckedCreateNestedOneWithoutZapInput;
+	zapActions?: Prisma.ZapActionUncheckedCreateNestedManyWithoutZapInput;
 	zapRuns?: Prisma.ZapRunUncheckedCreateNestedManyWithoutZapInput;
 };
 
 export type ZapUpdateInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	triggerId?: Prisma.StringFieldUpdateOperationsInput | string;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	user?: Prisma.UserUpdateOneRequiredWithoutZapsNestedInput;
-	trigger?: Prisma.TriggerUpdateOneWithoutZapNestedInput;
-	actions?: Prisma.ActionUpdateManyWithoutZapNestedInput;
+	zapTrigger?: Prisma.ZapTriggerUpdateOneWithoutZapNestedInput;
+	zapActions?: Prisma.ZapActionUpdateManyWithoutZapNestedInput;
 	zapRuns?: Prisma.ZapRunUpdateManyWithoutZapNestedInput;
 };
 
 export type ZapUncheckedUpdateInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	userId?: Prisma.StringFieldUpdateOperationsInput | string;
-	triggerId?: Prisma.StringFieldUpdateOperationsInput | string;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-	trigger?: Prisma.TriggerUncheckedUpdateOneWithoutZapNestedInput;
-	actions?: Prisma.ActionUncheckedUpdateManyWithoutZapNestedInput;
+	zapTrigger?: Prisma.ZapTriggerUncheckedUpdateOneWithoutZapNestedInput;
+	zapActions?: Prisma.ZapActionUncheckedUpdateManyWithoutZapNestedInput;
 	zapRuns?: Prisma.ZapRunUncheckedUpdateManyWithoutZapNestedInput;
 };
 
 export type ZapCreateManyInput = {
 	id?: string;
+	name: string;
+	description?: string | null;
 	userId: string;
-	triggerId: string;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
 };
 
 export type ZapUpdateManyMutationInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	triggerId?: Prisma.StringFieldUpdateOperationsInput | string;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
 export type ZapUncheckedUpdateManyInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	userId?: Prisma.StringFieldUpdateOperationsInput | string;
-	triggerId?: Prisma.StringFieldUpdateOperationsInput | string;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -331,24 +353,27 @@ export type ZapOrderByRelationAggregateInput = {
 
 export type ZapCountOrderByAggregateInput = {
 	id?: Prisma.SortOrder;
+	name?: Prisma.SortOrder;
+	description?: Prisma.SortOrder;
 	userId?: Prisma.SortOrder;
-	triggerId?: Prisma.SortOrder;
 	createdAt?: Prisma.SortOrder;
 	updatedAt?: Prisma.SortOrder;
 };
 
 export type ZapMaxOrderByAggregateInput = {
 	id?: Prisma.SortOrder;
+	name?: Prisma.SortOrder;
+	description?: Prisma.SortOrder;
 	userId?: Prisma.SortOrder;
-	triggerId?: Prisma.SortOrder;
 	createdAt?: Prisma.SortOrder;
 	updatedAt?: Prisma.SortOrder;
 };
 
 export type ZapMinOrderByAggregateInput = {
 	id?: Prisma.SortOrder;
+	name?: Prisma.SortOrder;
+	description?: Prisma.SortOrder;
 	userId?: Prisma.SortOrder;
-	triggerId?: Prisma.SortOrder;
 	createdAt?: Prisma.SortOrder;
 	updatedAt?: Prisma.SortOrder;
 };
@@ -444,55 +469,55 @@ export type ZapUncheckedUpdateManyWithoutUserNestedInput = {
 	deleteMany?: Prisma.ZapScalarWhereInput | Prisma.ZapScalarWhereInput[];
 };
 
-export type ZapCreateNestedOneWithoutTriggerInput = {
+export type ZapCreateNestedOneWithoutZapTriggerInput = {
 	create?: Prisma.XOR<
-		Prisma.ZapCreateWithoutTriggerInput,
-		Prisma.ZapUncheckedCreateWithoutTriggerInput
+		Prisma.ZapCreateWithoutZapTriggerInput,
+		Prisma.ZapUncheckedCreateWithoutZapTriggerInput
 	>;
-	connectOrCreate?: Prisma.ZapCreateOrConnectWithoutTriggerInput;
+	connectOrCreate?: Prisma.ZapCreateOrConnectWithoutZapTriggerInput;
 	connect?: Prisma.ZapWhereUniqueInput;
 };
 
-export type ZapUpdateOneRequiredWithoutTriggerNestedInput = {
+export type ZapUpdateOneRequiredWithoutZapTriggerNestedInput = {
 	create?: Prisma.XOR<
-		Prisma.ZapCreateWithoutTriggerInput,
-		Prisma.ZapUncheckedCreateWithoutTriggerInput
+		Prisma.ZapCreateWithoutZapTriggerInput,
+		Prisma.ZapUncheckedCreateWithoutZapTriggerInput
 	>;
-	connectOrCreate?: Prisma.ZapCreateOrConnectWithoutTriggerInput;
-	upsert?: Prisma.ZapUpsertWithoutTriggerInput;
+	connectOrCreate?: Prisma.ZapCreateOrConnectWithoutZapTriggerInput;
+	upsert?: Prisma.ZapUpsertWithoutZapTriggerInput;
 	connect?: Prisma.ZapWhereUniqueInput;
 	update?: Prisma.XOR<
 		Prisma.XOR<
-			Prisma.ZapUpdateToOneWithWhereWithoutTriggerInput,
-			Prisma.ZapUpdateWithoutTriggerInput
+			Prisma.ZapUpdateToOneWithWhereWithoutZapTriggerInput,
+			Prisma.ZapUpdateWithoutZapTriggerInput
 		>,
-		Prisma.ZapUncheckedUpdateWithoutTriggerInput
+		Prisma.ZapUncheckedUpdateWithoutZapTriggerInput
 	>;
 };
 
-export type ZapCreateNestedOneWithoutActionsInput = {
+export type ZapCreateNestedOneWithoutZapActionsInput = {
 	create?: Prisma.XOR<
-		Prisma.ZapCreateWithoutActionsInput,
-		Prisma.ZapUncheckedCreateWithoutActionsInput
+		Prisma.ZapCreateWithoutZapActionsInput,
+		Prisma.ZapUncheckedCreateWithoutZapActionsInput
 	>;
-	connectOrCreate?: Prisma.ZapCreateOrConnectWithoutActionsInput;
+	connectOrCreate?: Prisma.ZapCreateOrConnectWithoutZapActionsInput;
 	connect?: Prisma.ZapWhereUniqueInput;
 };
 
-export type ZapUpdateOneRequiredWithoutActionsNestedInput = {
+export type ZapUpdateOneRequiredWithoutZapActionsNestedInput = {
 	create?: Prisma.XOR<
-		Prisma.ZapCreateWithoutActionsInput,
-		Prisma.ZapUncheckedCreateWithoutActionsInput
+		Prisma.ZapCreateWithoutZapActionsInput,
+		Prisma.ZapUncheckedCreateWithoutZapActionsInput
 	>;
-	connectOrCreate?: Prisma.ZapCreateOrConnectWithoutActionsInput;
-	upsert?: Prisma.ZapUpsertWithoutActionsInput;
+	connectOrCreate?: Prisma.ZapCreateOrConnectWithoutZapActionsInput;
+	upsert?: Prisma.ZapUpsertWithoutZapActionsInput;
 	connect?: Prisma.ZapWhereUniqueInput;
 	update?: Prisma.XOR<
 		Prisma.XOR<
-			Prisma.ZapUpdateToOneWithWhereWithoutActionsInput,
-			Prisma.ZapUpdateWithoutActionsInput
+			Prisma.ZapUpdateToOneWithWhereWithoutZapActionsInput,
+			Prisma.ZapUpdateWithoutZapActionsInput
 		>,
-		Prisma.ZapUncheckedUpdateWithoutActionsInput
+		Prisma.ZapUncheckedUpdateWithoutZapActionsInput
 	>;
 };
 
@@ -524,21 +549,23 @@ export type ZapUpdateOneRequiredWithoutZapRunsNestedInput = {
 
 export type ZapCreateWithoutUserInput = {
 	id?: string;
-	triggerId: string;
+	name: string;
+	description?: string | null;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
-	trigger?: Prisma.TriggerCreateNestedOneWithoutZapInput;
-	actions?: Prisma.ActionCreateNestedManyWithoutZapInput;
+	zapTrigger?: Prisma.ZapTriggerCreateNestedOneWithoutZapInput;
+	zapActions?: Prisma.ZapActionCreateNestedManyWithoutZapInput;
 	zapRuns?: Prisma.ZapRunCreateNestedManyWithoutZapInput;
 };
 
 export type ZapUncheckedCreateWithoutUserInput = {
 	id?: string;
-	triggerId: string;
+	name: string;
+	description?: string | null;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
-	trigger?: Prisma.TriggerUncheckedCreateNestedOneWithoutZapInput;
-	actions?: Prisma.ActionUncheckedCreateNestedManyWithoutZapInput;
+	zapTrigger?: Prisma.ZapTriggerUncheckedCreateNestedOneWithoutZapInput;
+	zapActions?: Prisma.ZapActionUncheckedCreateNestedManyWithoutZapInput;
 	zapRuns?: Prisma.ZapRunUncheckedCreateNestedManyWithoutZapInput;
 };
 
@@ -588,166 +615,177 @@ export type ZapScalarWhereInput = {
 	OR?: Prisma.ZapScalarWhereInput[];
 	NOT?: Prisma.ZapScalarWhereInput | Prisma.ZapScalarWhereInput[];
 	id?: Prisma.StringFilter<"Zap"> | string;
+	name?: Prisma.StringFilter<"Zap"> | string;
+	description?: Prisma.StringNullableFilter<"Zap"> | string | null;
 	userId?: Prisma.StringFilter<"Zap"> | string;
-	triggerId?: Prisma.StringFilter<"Zap"> | string;
 	createdAt?: Prisma.DateTimeFilter<"Zap"> | Date | string;
 	updatedAt?: Prisma.DateTimeFilter<"Zap"> | Date | string;
 };
 
-export type ZapCreateWithoutTriggerInput = {
+export type ZapCreateWithoutZapTriggerInput = {
 	id?: string;
-	triggerId: string;
+	name: string;
+	description?: string | null;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
 	user: Prisma.UserCreateNestedOneWithoutZapsInput;
-	actions?: Prisma.ActionCreateNestedManyWithoutZapInput;
+	zapActions?: Prisma.ZapActionCreateNestedManyWithoutZapInput;
 	zapRuns?: Prisma.ZapRunCreateNestedManyWithoutZapInput;
 };
 
-export type ZapUncheckedCreateWithoutTriggerInput = {
+export type ZapUncheckedCreateWithoutZapTriggerInput = {
 	id?: string;
+	name: string;
+	description?: string | null;
 	userId: string;
-	triggerId: string;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
-	actions?: Prisma.ActionUncheckedCreateNestedManyWithoutZapInput;
+	zapActions?: Prisma.ZapActionUncheckedCreateNestedManyWithoutZapInput;
 	zapRuns?: Prisma.ZapRunUncheckedCreateNestedManyWithoutZapInput;
 };
 
-export type ZapCreateOrConnectWithoutTriggerInput = {
+export type ZapCreateOrConnectWithoutZapTriggerInput = {
 	where: Prisma.ZapWhereUniqueInput;
 	create: Prisma.XOR<
-		Prisma.ZapCreateWithoutTriggerInput,
-		Prisma.ZapUncheckedCreateWithoutTriggerInput
+		Prisma.ZapCreateWithoutZapTriggerInput,
+		Prisma.ZapUncheckedCreateWithoutZapTriggerInput
 	>;
 };
 
-export type ZapUpsertWithoutTriggerInput = {
+export type ZapUpsertWithoutZapTriggerInput = {
 	update: Prisma.XOR<
-		Prisma.ZapUpdateWithoutTriggerInput,
-		Prisma.ZapUncheckedUpdateWithoutTriggerInput
+		Prisma.ZapUpdateWithoutZapTriggerInput,
+		Prisma.ZapUncheckedUpdateWithoutZapTriggerInput
 	>;
 	create: Prisma.XOR<
-		Prisma.ZapCreateWithoutTriggerInput,
-		Prisma.ZapUncheckedCreateWithoutTriggerInput
+		Prisma.ZapCreateWithoutZapTriggerInput,
+		Prisma.ZapUncheckedCreateWithoutZapTriggerInput
 	>;
 	where?: Prisma.ZapWhereInput;
 };
 
-export type ZapUpdateToOneWithWhereWithoutTriggerInput = {
+export type ZapUpdateToOneWithWhereWithoutZapTriggerInput = {
 	where?: Prisma.ZapWhereInput;
 	data: Prisma.XOR<
-		Prisma.ZapUpdateWithoutTriggerInput,
-		Prisma.ZapUncheckedUpdateWithoutTriggerInput
+		Prisma.ZapUpdateWithoutZapTriggerInput,
+		Prisma.ZapUncheckedUpdateWithoutZapTriggerInput
 	>;
 };
 
-export type ZapUpdateWithoutTriggerInput = {
+export type ZapUpdateWithoutZapTriggerInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	triggerId?: Prisma.StringFieldUpdateOperationsInput | string;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	user?: Prisma.UserUpdateOneRequiredWithoutZapsNestedInput;
-	actions?: Prisma.ActionUpdateManyWithoutZapNestedInput;
+	zapActions?: Prisma.ZapActionUpdateManyWithoutZapNestedInput;
 	zapRuns?: Prisma.ZapRunUpdateManyWithoutZapNestedInput;
 };
 
-export type ZapUncheckedUpdateWithoutTriggerInput = {
+export type ZapUncheckedUpdateWithoutZapTriggerInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	userId?: Prisma.StringFieldUpdateOperationsInput | string;
-	triggerId?: Prisma.StringFieldUpdateOperationsInput | string;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-	actions?: Prisma.ActionUncheckedUpdateManyWithoutZapNestedInput;
+	zapActions?: Prisma.ZapActionUncheckedUpdateManyWithoutZapNestedInput;
 	zapRuns?: Prisma.ZapRunUncheckedUpdateManyWithoutZapNestedInput;
 };
 
-export type ZapCreateWithoutActionsInput = {
+export type ZapCreateWithoutZapActionsInput = {
 	id?: string;
-	triggerId: string;
+	name: string;
+	description?: string | null;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
 	user: Prisma.UserCreateNestedOneWithoutZapsInput;
-	trigger?: Prisma.TriggerCreateNestedOneWithoutZapInput;
+	zapTrigger?: Prisma.ZapTriggerCreateNestedOneWithoutZapInput;
 	zapRuns?: Prisma.ZapRunCreateNestedManyWithoutZapInput;
 };
 
-export type ZapUncheckedCreateWithoutActionsInput = {
+export type ZapUncheckedCreateWithoutZapActionsInput = {
 	id?: string;
+	name: string;
+	description?: string | null;
 	userId: string;
-	triggerId: string;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
-	trigger?: Prisma.TriggerUncheckedCreateNestedOneWithoutZapInput;
+	zapTrigger?: Prisma.ZapTriggerUncheckedCreateNestedOneWithoutZapInput;
 	zapRuns?: Prisma.ZapRunUncheckedCreateNestedManyWithoutZapInput;
 };
 
-export type ZapCreateOrConnectWithoutActionsInput = {
+export type ZapCreateOrConnectWithoutZapActionsInput = {
 	where: Prisma.ZapWhereUniqueInput;
 	create: Prisma.XOR<
-		Prisma.ZapCreateWithoutActionsInput,
-		Prisma.ZapUncheckedCreateWithoutActionsInput
+		Prisma.ZapCreateWithoutZapActionsInput,
+		Prisma.ZapUncheckedCreateWithoutZapActionsInput
 	>;
 };
 
-export type ZapUpsertWithoutActionsInput = {
+export type ZapUpsertWithoutZapActionsInput = {
 	update: Prisma.XOR<
-		Prisma.ZapUpdateWithoutActionsInput,
-		Prisma.ZapUncheckedUpdateWithoutActionsInput
+		Prisma.ZapUpdateWithoutZapActionsInput,
+		Prisma.ZapUncheckedUpdateWithoutZapActionsInput
 	>;
 	create: Prisma.XOR<
-		Prisma.ZapCreateWithoutActionsInput,
-		Prisma.ZapUncheckedCreateWithoutActionsInput
+		Prisma.ZapCreateWithoutZapActionsInput,
+		Prisma.ZapUncheckedCreateWithoutZapActionsInput
 	>;
 	where?: Prisma.ZapWhereInput;
 };
 
-export type ZapUpdateToOneWithWhereWithoutActionsInput = {
+export type ZapUpdateToOneWithWhereWithoutZapActionsInput = {
 	where?: Prisma.ZapWhereInput;
 	data: Prisma.XOR<
-		Prisma.ZapUpdateWithoutActionsInput,
-		Prisma.ZapUncheckedUpdateWithoutActionsInput
+		Prisma.ZapUpdateWithoutZapActionsInput,
+		Prisma.ZapUncheckedUpdateWithoutZapActionsInput
 	>;
 };
 
-export type ZapUpdateWithoutActionsInput = {
+export type ZapUpdateWithoutZapActionsInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	triggerId?: Prisma.StringFieldUpdateOperationsInput | string;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	user?: Prisma.UserUpdateOneRequiredWithoutZapsNestedInput;
-	trigger?: Prisma.TriggerUpdateOneWithoutZapNestedInput;
+	zapTrigger?: Prisma.ZapTriggerUpdateOneWithoutZapNestedInput;
 	zapRuns?: Prisma.ZapRunUpdateManyWithoutZapNestedInput;
 };
 
-export type ZapUncheckedUpdateWithoutActionsInput = {
+export type ZapUncheckedUpdateWithoutZapActionsInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	userId?: Prisma.StringFieldUpdateOperationsInput | string;
-	triggerId?: Prisma.StringFieldUpdateOperationsInput | string;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-	trigger?: Prisma.TriggerUncheckedUpdateOneWithoutZapNestedInput;
+	zapTrigger?: Prisma.ZapTriggerUncheckedUpdateOneWithoutZapNestedInput;
 	zapRuns?: Prisma.ZapRunUncheckedUpdateManyWithoutZapNestedInput;
 };
 
 export type ZapCreateWithoutZapRunsInput = {
 	id?: string;
-	triggerId: string;
+	name: string;
+	description?: string | null;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
 	user: Prisma.UserCreateNestedOneWithoutZapsInput;
-	trigger?: Prisma.TriggerCreateNestedOneWithoutZapInput;
-	actions?: Prisma.ActionCreateNestedManyWithoutZapInput;
+	zapTrigger?: Prisma.ZapTriggerCreateNestedOneWithoutZapInput;
+	zapActions?: Prisma.ZapActionCreateNestedManyWithoutZapInput;
 };
 
 export type ZapUncheckedCreateWithoutZapRunsInput = {
 	id?: string;
+	name: string;
+	description?: string | null;
 	userId: string;
-	triggerId: string;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
-	trigger?: Prisma.TriggerUncheckedCreateNestedOneWithoutZapInput;
-	actions?: Prisma.ActionUncheckedCreateNestedManyWithoutZapInput;
+	zapTrigger?: Prisma.ZapTriggerUncheckedCreateNestedOneWithoutZapInput;
+	zapActions?: Prisma.ZapActionUncheckedCreateNestedManyWithoutZapInput;
 };
 
 export type ZapCreateOrConnectWithoutZapRunsInput = {
@@ -780,54 +818,60 @@ export type ZapUpdateToOneWithWhereWithoutZapRunsInput = {
 
 export type ZapUpdateWithoutZapRunsInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	triggerId?: Prisma.StringFieldUpdateOperationsInput | string;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	user?: Prisma.UserUpdateOneRequiredWithoutZapsNestedInput;
-	trigger?: Prisma.TriggerUpdateOneWithoutZapNestedInput;
-	actions?: Prisma.ActionUpdateManyWithoutZapNestedInput;
+	zapTrigger?: Prisma.ZapTriggerUpdateOneWithoutZapNestedInput;
+	zapActions?: Prisma.ZapActionUpdateManyWithoutZapNestedInput;
 };
 
 export type ZapUncheckedUpdateWithoutZapRunsInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	userId?: Prisma.StringFieldUpdateOperationsInput | string;
-	triggerId?: Prisma.StringFieldUpdateOperationsInput | string;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-	trigger?: Prisma.TriggerUncheckedUpdateOneWithoutZapNestedInput;
-	actions?: Prisma.ActionUncheckedUpdateManyWithoutZapNestedInput;
+	zapTrigger?: Prisma.ZapTriggerUncheckedUpdateOneWithoutZapNestedInput;
+	zapActions?: Prisma.ZapActionUncheckedUpdateManyWithoutZapNestedInput;
 };
 
 export type ZapCreateManyUserInput = {
 	id?: string;
-	triggerId: string;
+	name: string;
+	description?: string | null;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
 };
 
 export type ZapUpdateWithoutUserInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	triggerId?: Prisma.StringFieldUpdateOperationsInput | string;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-	trigger?: Prisma.TriggerUpdateOneWithoutZapNestedInput;
-	actions?: Prisma.ActionUpdateManyWithoutZapNestedInput;
+	zapTrigger?: Prisma.ZapTriggerUpdateOneWithoutZapNestedInput;
+	zapActions?: Prisma.ZapActionUpdateManyWithoutZapNestedInput;
 	zapRuns?: Prisma.ZapRunUpdateManyWithoutZapNestedInput;
 };
 
 export type ZapUncheckedUpdateWithoutUserInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	triggerId?: Prisma.StringFieldUpdateOperationsInput | string;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-	trigger?: Prisma.TriggerUncheckedUpdateOneWithoutZapNestedInput;
-	actions?: Prisma.ActionUncheckedUpdateManyWithoutZapNestedInput;
+	zapTrigger?: Prisma.ZapTriggerUncheckedUpdateOneWithoutZapNestedInput;
+	zapActions?: Prisma.ZapActionUncheckedUpdateManyWithoutZapNestedInput;
 	zapRuns?: Prisma.ZapRunUncheckedUpdateManyWithoutZapNestedInput;
 };
 
 export type ZapUncheckedUpdateManyWithoutUserInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	triggerId?: Prisma.StringFieldUpdateOperationsInput | string;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -837,7 +881,7 @@ export type ZapUncheckedUpdateManyWithoutUserInput = {
  */
 
 export type ZapCountOutputType = {
-	actions: number;
+	zapActions: number;
 	zapRuns: number;
 };
 
@@ -845,7 +889,7 @@ export type ZapCountOutputTypeSelect<
 	ExtArgs extends
 		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-	actions?: boolean | ZapCountOutputTypeCountActionsArgs;
+	zapActions?: boolean | ZapCountOutputTypeCountZapActionsArgs;
 	zapRuns?: boolean | ZapCountOutputTypeCountZapRunsArgs;
 };
 
@@ -865,11 +909,11 @@ export type ZapCountOutputTypeDefaultArgs<
 /**
  * ZapCountOutputType without action
  */
-export type ZapCountOutputTypeCountActionsArgs<
+export type ZapCountOutputTypeCountZapActionsArgs<
 	ExtArgs extends
 		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-	where?: Prisma.ActionWhereInput;
+	where?: Prisma.ZapActionWhereInput;
 };
 
 /**
@@ -888,13 +932,14 @@ export type ZapSelect<
 > = runtime.Types.Extensions.GetSelect<
 	{
 		id?: boolean;
+		name?: boolean;
+		description?: boolean;
 		userId?: boolean;
-		triggerId?: boolean;
 		createdAt?: boolean;
 		updatedAt?: boolean;
 		user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
-		trigger?: boolean | Prisma.Zap$triggerArgs<ExtArgs>;
-		actions?: boolean | Prisma.Zap$actionsArgs<ExtArgs>;
+		zapTrigger?: boolean | Prisma.Zap$zapTriggerArgs<ExtArgs>;
+		zapActions?: boolean | Prisma.Zap$zapActionsArgs<ExtArgs>;
 		zapRuns?: boolean | Prisma.Zap$zapRunsArgs<ExtArgs>;
 		_count?: boolean | Prisma.ZapCountOutputTypeDefaultArgs<ExtArgs>;
 	},
@@ -907,8 +952,9 @@ export type ZapSelectCreateManyAndReturn<
 > = runtime.Types.Extensions.GetSelect<
 	{
 		id?: boolean;
+		name?: boolean;
+		description?: boolean;
 		userId?: boolean;
-		triggerId?: boolean;
 		createdAt?: boolean;
 		updatedAt?: boolean;
 		user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
@@ -922,8 +968,9 @@ export type ZapSelectUpdateManyAndReturn<
 > = runtime.Types.Extensions.GetSelect<
 	{
 		id?: boolean;
+		name?: boolean;
+		description?: boolean;
 		userId?: boolean;
-		triggerId?: boolean;
 		createdAt?: boolean;
 		updatedAt?: boolean;
 		user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
@@ -933,8 +980,9 @@ export type ZapSelectUpdateManyAndReturn<
 
 export type ZapSelectScalar = {
 	id?: boolean;
+	name?: boolean;
+	description?: boolean;
 	userId?: boolean;
-	triggerId?: boolean;
 	createdAt?: boolean;
 	updatedAt?: boolean;
 };
@@ -943,7 +991,7 @@ export type ZapOmit<
 	ExtArgs extends
 		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetOmit<
-	"id" | "userId" | "triggerId" | "createdAt" | "updatedAt",
+	"id" | "name" | "description" | "userId" | "createdAt" | "updatedAt",
 	ExtArgs["result"]["zap"]
 >;
 export type ZapInclude<
@@ -951,8 +999,8 @@ export type ZapInclude<
 		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
 	user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
-	trigger?: boolean | Prisma.Zap$triggerArgs<ExtArgs>;
-	actions?: boolean | Prisma.Zap$actionsArgs<ExtArgs>;
+	zapTrigger?: boolean | Prisma.Zap$zapTriggerArgs<ExtArgs>;
+	zapActions?: boolean | Prisma.Zap$zapActionsArgs<ExtArgs>;
 	zapRuns?: boolean | Prisma.Zap$zapRunsArgs<ExtArgs>;
 	_count?: boolean | Prisma.ZapCountOutputTypeDefaultArgs<ExtArgs>;
 };
@@ -976,15 +1024,16 @@ export type $ZapPayload<
 	name: "Zap";
 	objects: {
 		user: Prisma.$UserPayload<ExtArgs>;
-		trigger: Prisma.$TriggerPayload<ExtArgs> | null;
-		actions: Prisma.$ActionPayload<ExtArgs>[];
+		zapTrigger: Prisma.$ZapTriggerPayload<ExtArgs> | null;
+		zapActions: Prisma.$ZapActionPayload<ExtArgs>[];
 		zapRuns: Prisma.$ZapRunPayload<ExtArgs>[];
 	};
 	scalars: runtime.Types.Extensions.GetPayloadResult<
 		{
 			id: string;
+			name: string;
+			description: string | null;
 			userId: string;
-			triggerId: string;
 			createdAt: Date;
 			updatedAt: Date;
 		},
@@ -1551,11 +1600,11 @@ export interface Prisma__ZapClient<
 		ExtArgs,
 		GlobalOmitOptions
 	>;
-	trigger<T extends Prisma.Zap$triggerArgs<ExtArgs> = {}>(
-		args?: Prisma.Subset<T, Prisma.Zap$triggerArgs<ExtArgs>>,
-	): Prisma.Prisma__TriggerClient<
+	zapTrigger<T extends Prisma.Zap$zapTriggerArgs<ExtArgs> = {}>(
+		args?: Prisma.Subset<T, Prisma.Zap$zapTriggerArgs<ExtArgs>>,
+	): Prisma.Prisma__ZapTriggerClient<
 		runtime.Types.Result.GetResult<
-			Prisma.$TriggerPayload<ExtArgs>,
+			Prisma.$ZapTriggerPayload<ExtArgs>,
 			T,
 			"findUniqueOrThrow",
 			GlobalOmitOptions
@@ -1564,11 +1613,11 @@ export interface Prisma__ZapClient<
 		ExtArgs,
 		GlobalOmitOptions
 	>;
-	actions<T extends Prisma.Zap$actionsArgs<ExtArgs> = {}>(
-		args?: Prisma.Subset<T, Prisma.Zap$actionsArgs<ExtArgs>>,
+	zapActions<T extends Prisma.Zap$zapActionsArgs<ExtArgs> = {}>(
+		args?: Prisma.Subset<T, Prisma.Zap$zapActionsArgs<ExtArgs>>,
 	): Prisma.PrismaPromise<
 		| runtime.Types.Result.GetResult<
-				Prisma.$ActionPayload<ExtArgs>,
+				Prisma.$ZapActionPayload<ExtArgs>,
 				T,
 				"findMany",
 				GlobalOmitOptions
@@ -1629,8 +1678,9 @@ export interface Prisma__ZapClient<
  */
 export interface ZapFieldRefs {
 	readonly id: Prisma.FieldRef<"Zap", "String">;
+	readonly name: Prisma.FieldRef<"Zap", "String">;
+	readonly description: Prisma.FieldRef<"Zap", "String">;
 	readonly userId: Prisma.FieldRef<"Zap", "String">;
-	readonly triggerId: Prisma.FieldRef<"Zap", "String">;
 	readonly createdAt: Prisma.FieldRef<"Zap", "DateTime">;
 	readonly updatedAt: Prisma.FieldRef<"Zap", "DateTime">;
 }
@@ -2082,54 +2132,56 @@ export type ZapDeleteManyArgs<
 };
 
 /**
- * Zap.trigger
+ * Zap.zapTrigger
  */
-export type Zap$triggerArgs<
+export type Zap$zapTriggerArgs<
 	ExtArgs extends
 		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
 	/**
-	 * Select specific fields to fetch from the Trigger
+	 * Select specific fields to fetch from the ZapTrigger
 	 */
-	select?: Prisma.TriggerSelect<ExtArgs> | null;
+	select?: Prisma.ZapTriggerSelect<ExtArgs> | null;
 	/**
-	 * Omit specific fields from the Trigger
+	 * Omit specific fields from the ZapTrigger
 	 */
-	omit?: Prisma.TriggerOmit<ExtArgs> | null;
+	omit?: Prisma.ZapTriggerOmit<ExtArgs> | null;
 	/**
 	 * Choose, which related nodes to fetch as well
 	 */
-	include?: Prisma.TriggerInclude<ExtArgs> | null;
-	where?: Prisma.TriggerWhereInput;
+	include?: Prisma.ZapTriggerInclude<ExtArgs> | null;
+	where?: Prisma.ZapTriggerWhereInput;
 };
 
 /**
- * Zap.actions
+ * Zap.zapActions
  */
-export type Zap$actionsArgs<
+export type Zap$zapActionsArgs<
 	ExtArgs extends
 		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
 	/**
-	 * Select specific fields to fetch from the Action
+	 * Select specific fields to fetch from the ZapAction
 	 */
-	select?: Prisma.ActionSelect<ExtArgs> | null;
+	select?: Prisma.ZapActionSelect<ExtArgs> | null;
 	/**
-	 * Omit specific fields from the Action
+	 * Omit specific fields from the ZapAction
 	 */
-	omit?: Prisma.ActionOmit<ExtArgs> | null;
+	omit?: Prisma.ZapActionOmit<ExtArgs> | null;
 	/**
 	 * Choose, which related nodes to fetch as well
 	 */
-	include?: Prisma.ActionInclude<ExtArgs> | null;
-	where?: Prisma.ActionWhereInput;
+	include?: Prisma.ZapActionInclude<ExtArgs> | null;
+	where?: Prisma.ZapActionWhereInput;
 	orderBy?:
-		| Prisma.ActionOrderByWithRelationInput
-		| Prisma.ActionOrderByWithRelationInput[];
-	cursor?: Prisma.ActionWhereUniqueInput;
+		| Prisma.ZapActionOrderByWithRelationInput
+		| Prisma.ZapActionOrderByWithRelationInput[];
+	cursor?: Prisma.ZapActionWhereUniqueInput;
 	take?: number;
 	skip?: number;
-	distinct?: Prisma.ActionScalarFieldEnum | Prisma.ActionScalarFieldEnum[];
+	distinct?:
+		| Prisma.ZapActionScalarFieldEnum
+		| Prisma.ZapActionScalarFieldEnum[];
 };
 
 /**

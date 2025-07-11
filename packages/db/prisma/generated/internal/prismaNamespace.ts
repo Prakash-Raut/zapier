@@ -432,10 +432,10 @@ export const ModelName = {
 	Account: "Account",
 	Verification: "Verification",
 	Zap: "Zap",
-	Trigger: "Trigger",
+	ZapTrigger: "ZapTrigger",
+	ZapAction: "ZapAction",
 	Action: "Action",
-	ActionType: "ActionType",
-	TriggerType: "TriggerType",
+	Trigger: "Trigger",
 	ZapRun: "ZapRun",
 	ZapRunOutbox: "ZapRunOutbox",
 } as const;
@@ -468,10 +468,10 @@ export type TypeMap<
 			| "account"
 			| "verification"
 			| "zap"
-			| "trigger"
+			| "zapTrigger"
+			| "zapAction"
 			| "action"
-			| "actionType"
-			| "triggerType"
+			| "trigger"
 			| "zapRun"
 			| "zapRunOutbox";
 		txIsolationLevel: TransactionIsolationLevel;
@@ -857,78 +857,154 @@ export type TypeMap<
 				};
 			};
 		};
-		Trigger: {
-			payload: Prisma.$TriggerPayload<ExtArgs>;
-			fields: Prisma.TriggerFieldRefs;
+		ZapTrigger: {
+			payload: Prisma.$ZapTriggerPayload<ExtArgs>;
+			fields: Prisma.ZapTriggerFieldRefs;
 			operations: {
 				findUnique: {
-					args: Prisma.TriggerFindUniqueArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload> | null;
+					args: Prisma.ZapTriggerFindUniqueArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapTriggerPayload> | null;
 				};
 				findUniqueOrThrow: {
-					args: Prisma.TriggerFindUniqueOrThrowArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload>;
+					args: Prisma.ZapTriggerFindUniqueOrThrowArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapTriggerPayload>;
 				};
 				findFirst: {
-					args: Prisma.TriggerFindFirstArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload> | null;
+					args: Prisma.ZapTriggerFindFirstArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapTriggerPayload> | null;
 				};
 				findFirstOrThrow: {
-					args: Prisma.TriggerFindFirstOrThrowArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload>;
+					args: Prisma.ZapTriggerFindFirstOrThrowArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapTriggerPayload>;
 				};
 				findMany: {
-					args: Prisma.TriggerFindManyArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload>[];
+					args: Prisma.ZapTriggerFindManyArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapTriggerPayload>[];
 				};
 				create: {
-					args: Prisma.TriggerCreateArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload>;
+					args: Prisma.ZapTriggerCreateArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapTriggerPayload>;
 				};
 				createMany: {
-					args: Prisma.TriggerCreateManyArgs<ExtArgs>;
+					args: Prisma.ZapTriggerCreateManyArgs<ExtArgs>;
 					result: BatchPayload;
 				};
 				createManyAndReturn: {
-					args: Prisma.TriggerCreateManyAndReturnArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload>[];
+					args: Prisma.ZapTriggerCreateManyAndReturnArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapTriggerPayload>[];
 				};
 				delete: {
-					args: Prisma.TriggerDeleteArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload>;
+					args: Prisma.ZapTriggerDeleteArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapTriggerPayload>;
 				};
 				update: {
-					args: Prisma.TriggerUpdateArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload>;
+					args: Prisma.ZapTriggerUpdateArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapTriggerPayload>;
 				};
 				deleteMany: {
-					args: Prisma.TriggerDeleteManyArgs<ExtArgs>;
+					args: Prisma.ZapTriggerDeleteManyArgs<ExtArgs>;
 					result: BatchPayload;
 				};
 				updateMany: {
-					args: Prisma.TriggerUpdateManyArgs<ExtArgs>;
+					args: Prisma.ZapTriggerUpdateManyArgs<ExtArgs>;
 					result: BatchPayload;
 				};
 				updateManyAndReturn: {
-					args: Prisma.TriggerUpdateManyAndReturnArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload>[];
+					args: Prisma.ZapTriggerUpdateManyAndReturnArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapTriggerPayload>[];
 				};
 				upsert: {
-					args: Prisma.TriggerUpsertArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload>;
+					args: Prisma.ZapTriggerUpsertArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapTriggerPayload>;
 				};
 				aggregate: {
-					args: Prisma.TriggerAggregateArgs<ExtArgs>;
-					result: runtime.Types.Utils.Optional<Prisma.AggregateTrigger>;
+					args: Prisma.ZapTriggerAggregateArgs<ExtArgs>;
+					result: runtime.Types.Utils.Optional<Prisma.AggregateZapTrigger>;
 				};
 				groupBy: {
-					args: Prisma.TriggerGroupByArgs<ExtArgs>;
-					result: runtime.Types.Utils.Optional<Prisma.TriggerGroupByOutputType>[];
+					args: Prisma.ZapTriggerGroupByArgs<ExtArgs>;
+					result: runtime.Types.Utils.Optional<Prisma.ZapTriggerGroupByOutputType>[];
 				};
 				count: {
-					args: Prisma.TriggerCountArgs<ExtArgs>;
+					args: Prisma.ZapTriggerCountArgs<ExtArgs>;
 					result:
-						| runtime.Types.Utils.Optional<Prisma.TriggerCountAggregateOutputType>
+						| runtime.Types.Utils.Optional<Prisma.ZapTriggerCountAggregateOutputType>
+						| number;
+				};
+			};
+		};
+		ZapAction: {
+			payload: Prisma.$ZapActionPayload<ExtArgs>;
+			fields: Prisma.ZapActionFieldRefs;
+			operations: {
+				findUnique: {
+					args: Prisma.ZapActionFindUniqueArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapActionPayload> | null;
+				};
+				findUniqueOrThrow: {
+					args: Prisma.ZapActionFindUniqueOrThrowArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapActionPayload>;
+				};
+				findFirst: {
+					args: Prisma.ZapActionFindFirstArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapActionPayload> | null;
+				};
+				findFirstOrThrow: {
+					args: Prisma.ZapActionFindFirstOrThrowArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapActionPayload>;
+				};
+				findMany: {
+					args: Prisma.ZapActionFindManyArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapActionPayload>[];
+				};
+				create: {
+					args: Prisma.ZapActionCreateArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapActionPayload>;
+				};
+				createMany: {
+					args: Prisma.ZapActionCreateManyArgs<ExtArgs>;
+					result: BatchPayload;
+				};
+				createManyAndReturn: {
+					args: Prisma.ZapActionCreateManyAndReturnArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapActionPayload>[];
+				};
+				delete: {
+					args: Prisma.ZapActionDeleteArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapActionPayload>;
+				};
+				update: {
+					args: Prisma.ZapActionUpdateArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapActionPayload>;
+				};
+				deleteMany: {
+					args: Prisma.ZapActionDeleteManyArgs<ExtArgs>;
+					result: BatchPayload;
+				};
+				updateMany: {
+					args: Prisma.ZapActionUpdateManyArgs<ExtArgs>;
+					result: BatchPayload;
+				};
+				updateManyAndReturn: {
+					args: Prisma.ZapActionUpdateManyAndReturnArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapActionPayload>[];
+				};
+				upsert: {
+					args: Prisma.ZapActionUpsertArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$ZapActionPayload>;
+				};
+				aggregate: {
+					args: Prisma.ZapActionAggregateArgs<ExtArgs>;
+					result: runtime.Types.Utils.Optional<Prisma.AggregateZapAction>;
+				};
+				groupBy: {
+					args: Prisma.ZapActionGroupByArgs<ExtArgs>;
+					result: runtime.Types.Utils.Optional<Prisma.ZapActionGroupByOutputType>[];
+				};
+				count: {
+					args: Prisma.ZapActionCountArgs<ExtArgs>;
+					result:
+						| runtime.Types.Utils.Optional<Prisma.ZapActionCountAggregateOutputType>
 						| number;
 				};
 			};
@@ -1009,154 +1085,78 @@ export type TypeMap<
 				};
 			};
 		};
-		ActionType: {
-			payload: Prisma.$ActionTypePayload<ExtArgs>;
-			fields: Prisma.ActionTypeFieldRefs;
+		Trigger: {
+			payload: Prisma.$TriggerPayload<ExtArgs>;
+			fields: Prisma.TriggerFieldRefs;
 			operations: {
 				findUnique: {
-					args: Prisma.ActionTypeFindUniqueArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionTypePayload> | null;
+					args: Prisma.TriggerFindUniqueArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload> | null;
 				};
 				findUniqueOrThrow: {
-					args: Prisma.ActionTypeFindUniqueOrThrowArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionTypePayload>;
+					args: Prisma.TriggerFindUniqueOrThrowArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload>;
 				};
 				findFirst: {
-					args: Prisma.ActionTypeFindFirstArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionTypePayload> | null;
+					args: Prisma.TriggerFindFirstArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload> | null;
 				};
 				findFirstOrThrow: {
-					args: Prisma.ActionTypeFindFirstOrThrowArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionTypePayload>;
+					args: Prisma.TriggerFindFirstOrThrowArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload>;
 				};
 				findMany: {
-					args: Prisma.ActionTypeFindManyArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionTypePayload>[];
+					args: Prisma.TriggerFindManyArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload>[];
 				};
 				create: {
-					args: Prisma.ActionTypeCreateArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionTypePayload>;
+					args: Prisma.TriggerCreateArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload>;
 				};
 				createMany: {
-					args: Prisma.ActionTypeCreateManyArgs<ExtArgs>;
+					args: Prisma.TriggerCreateManyArgs<ExtArgs>;
 					result: BatchPayload;
 				};
 				createManyAndReturn: {
-					args: Prisma.ActionTypeCreateManyAndReturnArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionTypePayload>[];
+					args: Prisma.TriggerCreateManyAndReturnArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload>[];
 				};
 				delete: {
-					args: Prisma.ActionTypeDeleteArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionTypePayload>;
+					args: Prisma.TriggerDeleteArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload>;
 				};
 				update: {
-					args: Prisma.ActionTypeUpdateArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionTypePayload>;
+					args: Prisma.TriggerUpdateArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload>;
 				};
 				deleteMany: {
-					args: Prisma.ActionTypeDeleteManyArgs<ExtArgs>;
+					args: Prisma.TriggerDeleteManyArgs<ExtArgs>;
 					result: BatchPayload;
 				};
 				updateMany: {
-					args: Prisma.ActionTypeUpdateManyArgs<ExtArgs>;
+					args: Prisma.TriggerUpdateManyArgs<ExtArgs>;
 					result: BatchPayload;
 				};
 				updateManyAndReturn: {
-					args: Prisma.ActionTypeUpdateManyAndReturnArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionTypePayload>[];
+					args: Prisma.TriggerUpdateManyAndReturnArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload>[];
 				};
 				upsert: {
-					args: Prisma.ActionTypeUpsertArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionTypePayload>;
+					args: Prisma.TriggerUpsertArgs<ExtArgs>;
+					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerPayload>;
 				};
 				aggregate: {
-					args: Prisma.ActionTypeAggregateArgs<ExtArgs>;
-					result: runtime.Types.Utils.Optional<Prisma.AggregateActionType>;
+					args: Prisma.TriggerAggregateArgs<ExtArgs>;
+					result: runtime.Types.Utils.Optional<Prisma.AggregateTrigger>;
 				};
 				groupBy: {
-					args: Prisma.ActionTypeGroupByArgs<ExtArgs>;
-					result: runtime.Types.Utils.Optional<Prisma.ActionTypeGroupByOutputType>[];
+					args: Prisma.TriggerGroupByArgs<ExtArgs>;
+					result: runtime.Types.Utils.Optional<Prisma.TriggerGroupByOutputType>[];
 				};
 				count: {
-					args: Prisma.ActionTypeCountArgs<ExtArgs>;
+					args: Prisma.TriggerCountArgs<ExtArgs>;
 					result:
-						| runtime.Types.Utils.Optional<Prisma.ActionTypeCountAggregateOutputType>
-						| number;
-				};
-			};
-		};
-		TriggerType: {
-			payload: Prisma.$TriggerTypePayload<ExtArgs>;
-			fields: Prisma.TriggerTypeFieldRefs;
-			operations: {
-				findUnique: {
-					args: Prisma.TriggerTypeFindUniqueArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerTypePayload> | null;
-				};
-				findUniqueOrThrow: {
-					args: Prisma.TriggerTypeFindUniqueOrThrowArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerTypePayload>;
-				};
-				findFirst: {
-					args: Prisma.TriggerTypeFindFirstArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerTypePayload> | null;
-				};
-				findFirstOrThrow: {
-					args: Prisma.TriggerTypeFindFirstOrThrowArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerTypePayload>;
-				};
-				findMany: {
-					args: Prisma.TriggerTypeFindManyArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerTypePayload>[];
-				};
-				create: {
-					args: Prisma.TriggerTypeCreateArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerTypePayload>;
-				};
-				createMany: {
-					args: Prisma.TriggerTypeCreateManyArgs<ExtArgs>;
-					result: BatchPayload;
-				};
-				createManyAndReturn: {
-					args: Prisma.TriggerTypeCreateManyAndReturnArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerTypePayload>[];
-				};
-				delete: {
-					args: Prisma.TriggerTypeDeleteArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerTypePayload>;
-				};
-				update: {
-					args: Prisma.TriggerTypeUpdateArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerTypePayload>;
-				};
-				deleteMany: {
-					args: Prisma.TriggerTypeDeleteManyArgs<ExtArgs>;
-					result: BatchPayload;
-				};
-				updateMany: {
-					args: Prisma.TriggerTypeUpdateManyArgs<ExtArgs>;
-					result: BatchPayload;
-				};
-				updateManyAndReturn: {
-					args: Prisma.TriggerTypeUpdateManyAndReturnArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerTypePayload>[];
-				};
-				upsert: {
-					args: Prisma.TriggerTypeUpsertArgs<ExtArgs>;
-					result: runtime.Types.Utils.PayloadToResult<Prisma.$TriggerTypePayload>;
-				};
-				aggregate: {
-					args: Prisma.TriggerTypeAggregateArgs<ExtArgs>;
-					result: runtime.Types.Utils.Optional<Prisma.AggregateTriggerType>;
-				};
-				groupBy: {
-					args: Prisma.TriggerTypeGroupByArgs<ExtArgs>;
-					result: runtime.Types.Utils.Optional<Prisma.TriggerTypeGroupByOutputType>[];
-				};
-				count: {
-					args: Prisma.TriggerTypeCountArgs<ExtArgs>;
-					result:
-						| runtime.Types.Utils.Optional<Prisma.TriggerTypeCountAggregateOutputType>
+						| runtime.Types.Utils.Optional<Prisma.TriggerCountAggregateOutputType>
 						| number;
 				};
 			};
@@ -1412,8 +1412,9 @@ export type VerificationScalarFieldEnum =
 
 export const ZapScalarFieldEnum = {
 	id: "id",
+	name: "name",
+	description: "description",
 	userId: "userId",
-	triggerId: "triggerId",
 	createdAt: "createdAt",
 	updatedAt: "updatedAt",
 } as const;
@@ -1421,24 +1422,35 @@ export const ZapScalarFieldEnum = {
 export type ZapScalarFieldEnum =
 	(typeof ZapScalarFieldEnum)[keyof typeof ZapScalarFieldEnum];
 
-export const TriggerScalarFieldEnum = {
+export const ZapTriggerScalarFieldEnum = {
 	id: "id",
 	metadata: "metadata",
-	triggerTypeId: "triggerTypeId",
+	triggerId: "triggerId",
 	zapId: "zapId",
 	createdAt: "createdAt",
 	updatedAt: "updatedAt",
 } as const;
 
-export type TriggerScalarFieldEnum =
-	(typeof TriggerScalarFieldEnum)[keyof typeof TriggerScalarFieldEnum];
+export type ZapTriggerScalarFieldEnum =
+	(typeof ZapTriggerScalarFieldEnum)[keyof typeof ZapTriggerScalarFieldEnum];
+
+export const ZapActionScalarFieldEnum = {
+	id: "id",
+	metadata: "metadata",
+	actionId: "actionId",
+	zapId: "zapId",
+	sortingOrder: "sortingOrder",
+	createdAt: "createdAt",
+	updatedAt: "updatedAt",
+} as const;
+
+export type ZapActionScalarFieldEnum =
+	(typeof ZapActionScalarFieldEnum)[keyof typeof ZapActionScalarFieldEnum];
 
 export const ActionScalarFieldEnum = {
 	id: "id",
-	zapId: "zapId",
-	actionTypeId: "actionTypeId",
-	metadata: "metadata",
-	sortingOrder: "sortingOrder",
+	name: "name",
+	description: "description",
 	createdAt: "createdAt",
 	updatedAt: "updatedAt",
 } as const;
@@ -1446,32 +1458,21 @@ export const ActionScalarFieldEnum = {
 export type ActionScalarFieldEnum =
 	(typeof ActionScalarFieldEnum)[keyof typeof ActionScalarFieldEnum];
 
-export const ActionTypeScalarFieldEnum = {
+export const TriggerScalarFieldEnum = {
 	id: "id",
 	name: "name",
-	image: "image",
+	description: "description",
 	createdAt: "createdAt",
 	updatedAt: "updatedAt",
 } as const;
 
-export type ActionTypeScalarFieldEnum =
-	(typeof ActionTypeScalarFieldEnum)[keyof typeof ActionTypeScalarFieldEnum];
-
-export const TriggerTypeScalarFieldEnum = {
-	id: "id",
-	name: "name",
-	image: "image",
-	createdAt: "createdAt",
-	updatedAt: "updatedAt",
-} as const;
-
-export type TriggerTypeScalarFieldEnum =
-	(typeof TriggerTypeScalarFieldEnum)[keyof typeof TriggerTypeScalarFieldEnum];
+export type TriggerScalarFieldEnum =
+	(typeof TriggerScalarFieldEnum)[keyof typeof TriggerScalarFieldEnum];
 
 export const ZapRunScalarFieldEnum = {
 	id: "id",
-	zapId: "zapId",
 	metadata: "metadata",
+	zapId: "zapId",
 	createdAt: "createdAt",
 	updatedAt: "updatedAt",
 } as const;
@@ -1495,13 +1496,6 @@ export const SortOrder = {
 } as const;
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
-
-export const JsonNullValueInput = {
-	JsonNull: JsonNull,
-} as const;
-
-export type JsonNullValueInput =
-	(typeof JsonNullValueInput)[keyof typeof JsonNullValueInput];
 
 export const NullableJsonNullValueInput = {
 	DbNull: DbNull,
@@ -1710,10 +1704,10 @@ export type GlobalOmitConfig = {
 	account?: Prisma.AccountOmit;
 	verification?: Prisma.VerificationOmit;
 	zap?: Prisma.ZapOmit;
-	trigger?: Prisma.TriggerOmit;
+	zapTrigger?: Prisma.ZapTriggerOmit;
+	zapAction?: Prisma.ZapActionOmit;
 	action?: Prisma.ActionOmit;
-	actionType?: Prisma.ActionTypeOmit;
-	triggerType?: Prisma.TriggerTypeOmit;
+	trigger?: Prisma.TriggerOmit;
 	zapRun?: Prisma.ZapRunOmit;
 	zapRunOutbox?: Prisma.ZapRunOutboxOmit;
 };

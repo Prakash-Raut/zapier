@@ -27,8 +27,8 @@ export const zapRouter = router({
 			const zap = await db.zap.findUnique({
 				where: { id: input.id },
 				include: {
-					trigger: true,
-					actions: true,
+					zapTrigger: true,
+					zapActions: true,
 				},
 			});
 
@@ -45,6 +45,8 @@ export const zapRouter = router({
 	create: protectedProcedure
 		.input(
 			z.object({
+				name: z.string().min(1, "Name is required"),
+				description: z.string().optional(),
 				triggerId: z.string().min(1, "Trigger id is required"),
 				actions: z
 					.array(
@@ -59,28 +61,38 @@ export const zapRouter = router({
 			const createdZap = await db.$transaction(async (tx) => {
 				const zap = await tx.zap.create({
 					data: {
-						userId: ctx.session.user.id,
-						triggerId: input.triggerId,
-						actions: {
+						name: input.name,
+						description: input.description,
+						zapTrigger: {
+							create: {
+								triggerId: input.triggerId,
+							},
+						},
+						zapActions: {
 							create: input.actions.map((action, index) => ({
-								actionTypeId: action.actionId,
+								actionId: action.actionId,
 								sortingOrder: index + 1,
 							})),
 						},
+						userId: ctx.session.user.id,
 					},
 				});
 
-				const trigger = await tx.trigger.create({
+				const trigger = await tx.zapTrigger.create({
 					data: {
 						zapId: zap.id,
-						triggerTypeId: input.triggerId,
+						triggerId: input.triggerId,
 					},
 				});
 
 				await tx.zap.update({
 					where: { id: zap.id },
 					data: {
-						triggerId: trigger.id,
+						zapTrigger: {
+							connect: {
+								id: trigger.id,
+							},
+						},
 					},
 				});
 

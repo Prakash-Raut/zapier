@@ -4,7 +4,7 @@ import { protectedProcedure, router } from "../lib/trpc";
 
 export const actionRouter = router({
 	getAll: protectedProcedure.query(async () => {
-		const actions = await db.action.findMany({
+		const actions = await db.zapAction.findMany({
 			orderBy: {
 				id: "asc",
 			},

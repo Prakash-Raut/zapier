@@ -4,7 +4,7 @@ import { protectedProcedure, router } from "../lib/trpc";
 
 export const triggerRouter = router({
 	getAll: protectedProcedure.query(async () => {
-		const triggers = await db.trigger.findMany({
+		const triggers = await db.zapTrigger.findMany({
 			orderBy: {
 				id: "asc",
 			},

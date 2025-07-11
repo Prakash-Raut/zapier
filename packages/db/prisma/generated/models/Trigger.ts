@@ -25,25 +25,24 @@ export type AggregateTrigger = {
 
 export type TriggerMinAggregateOutputType = {
 	id: string | null;
-	triggerTypeId: string | null;
-	zapId: string | null;
+	name: string | null;
+	description: string | null;
 	createdAt: Date | null;
 	updatedAt: Date | null;
 };
 
 export type TriggerMaxAggregateOutputType = {
 	id: string | null;
-	triggerTypeId: string | null;
-	zapId: string | null;
+	name: string | null;
+	description: string | null;
 	createdAt: Date | null;
 	updatedAt: Date | null;
 };
 
 export type TriggerCountAggregateOutputType = {
 	id: number;
-	metadata: number;
-	triggerTypeId: number;
-	zapId: number;
+	name: number;
+	description: number;
 	createdAt: number;
 	updatedAt: number;
 	_all: number;
@@ -51,25 +50,24 @@ export type TriggerCountAggregateOutputType = {
 
 export type TriggerMinAggregateInputType = {
 	id?: true;
-	triggerTypeId?: true;
-	zapId?: true;
+	name?: true;
+	description?: true;
 	createdAt?: true;
 	updatedAt?: true;
 };
 
 export type TriggerMaxAggregateInputType = {
 	id?: true;
-	triggerTypeId?: true;
-	zapId?: true;
+	name?: true;
+	description?: true;
 	createdAt?: true;
 	updatedAt?: true;
 };
 
 export type TriggerCountAggregateInputType = {
 	id?: true;
-	metadata?: true;
-	triggerTypeId?: true;
-	zapId?: true;
+	name?: true;
+	description?: true;
 	createdAt?: true;
 	updatedAt?: true;
 	_all?: true;
@@ -156,9 +154,8 @@ export type TriggerGroupByArgs<
 
 export type TriggerGroupByOutputType = {
 	id: string;
-	metadata: runtime.JsonValue;
-	triggerTypeId: string;
-	zapId: string;
+	name: string;
+	description: string | null;
 	createdAt: Date;
 	updatedAt: Date;
 	_count: TriggerCountAggregateOutputType | null;
@@ -184,54 +181,41 @@ export type TriggerWhereInput = {
 	OR?: Prisma.TriggerWhereInput[];
 	NOT?: Prisma.TriggerWhereInput | Prisma.TriggerWhereInput[];
 	id?: Prisma.StringFilter<"Trigger"> | string;
-	metadata?: Prisma.JsonFilter<"Trigger">;
-	triggerTypeId?: Prisma.StringFilter<"Trigger"> | string;
-	zapId?: Prisma.StringFilter<"Trigger"> | string;
+	name?: Prisma.StringFilter<"Trigger"> | string;
+	description?: Prisma.StringNullableFilter<"Trigger"> | string | null;
 	createdAt?: Prisma.DateTimeFilter<"Trigger"> | Date | string;
 	updatedAt?: Prisma.DateTimeFilter<"Trigger"> | Date | string;
-	type?: Prisma.XOR<
-		Prisma.TriggerTypeScalarRelationFilter,
-		Prisma.TriggerTypeWhereInput
-	>;
-	zap?: Prisma.XOR<Prisma.ZapScalarRelationFilter, Prisma.ZapWhereInput>;
+	zapTriggers?: Prisma.ZapTriggerListRelationFilter;
 };
 
 export type TriggerOrderByWithRelationInput = {
 	id?: Prisma.SortOrder;
-	metadata?: Prisma.SortOrder;
-	triggerTypeId?: Prisma.SortOrder;
-	zapId?: Prisma.SortOrder;
+	name?: Prisma.SortOrder;
+	description?: Prisma.SortOrderInput | Prisma.SortOrder;
 	createdAt?: Prisma.SortOrder;
 	updatedAt?: Prisma.SortOrder;
-	type?: Prisma.TriggerTypeOrderByWithRelationInput;
-	zap?: Prisma.ZapOrderByWithRelationInput;
+	zapTriggers?: Prisma.ZapTriggerOrderByRelationAggregateInput;
 };
 
 export type TriggerWhereUniqueInput = Prisma.AtLeast<
 	{
 		id?: string;
-		zapId?: string;
 		AND?: Prisma.TriggerWhereInput | Prisma.TriggerWhereInput[];
 		OR?: Prisma.TriggerWhereInput[];
 		NOT?: Prisma.TriggerWhereInput | Prisma.TriggerWhereInput[];
-		metadata?: Prisma.JsonFilter<"Trigger">;
-		triggerTypeId?: Prisma.StringFilter<"Trigger"> | string;
+		name?: Prisma.StringFilter<"Trigger"> | string;
+		description?: Prisma.StringNullableFilter<"Trigger"> | string | null;
 		createdAt?: Prisma.DateTimeFilter<"Trigger"> | Date | string;
 		updatedAt?: Prisma.DateTimeFilter<"Trigger"> | Date | string;
-		type?: Prisma.XOR<
-			Prisma.TriggerTypeScalarRelationFilter,
-			Prisma.TriggerTypeWhereInput
-		>;
-		zap?: Prisma.XOR<Prisma.ZapScalarRelationFilter, Prisma.ZapWhereInput>;
+		zapTriggers?: Prisma.ZapTriggerListRelationFilter;
 	},
-	"id" | "zapId"
+	"id"
 >;
 
 export type TriggerOrderByWithAggregationInput = {
 	id?: Prisma.SortOrder;
-	metadata?: Prisma.SortOrder;
-	triggerTypeId?: Prisma.SortOrder;
-	zapId?: Prisma.SortOrder;
+	name?: Prisma.SortOrder;
+	description?: Prisma.SortOrderInput | Prisma.SortOrder;
 	createdAt?: Prisma.SortOrder;
 	updatedAt?: Prisma.SortOrder;
 	_count?: Prisma.TriggerCountOrderByAggregateInput;
@@ -248,423 +232,226 @@ export type TriggerScalarWhereWithAggregatesInput = {
 		| Prisma.TriggerScalarWhereWithAggregatesInput
 		| Prisma.TriggerScalarWhereWithAggregatesInput[];
 	id?: Prisma.StringWithAggregatesFilter<"Trigger"> | string;
-	metadata?: Prisma.JsonWithAggregatesFilter<"Trigger">;
-	triggerTypeId?: Prisma.StringWithAggregatesFilter<"Trigger"> | string;
-	zapId?: Prisma.StringWithAggregatesFilter<"Trigger"> | string;
+	name?: Prisma.StringWithAggregatesFilter<"Trigger"> | string;
+	description?:
+		| Prisma.StringNullableWithAggregatesFilter<"Trigger">
+		| string
+		| null;
 	createdAt?: Prisma.DateTimeWithAggregatesFilter<"Trigger"> | Date | string;
 	updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Trigger"> | Date | string;
 };
 
 export type TriggerCreateInput = {
 	id?: string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
+	name: string;
+	description?: string | null;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
-	type: Prisma.TriggerTypeCreateNestedOneWithoutTriggersInput;
-	zap: Prisma.ZapCreateNestedOneWithoutTriggerInput;
+	zapTriggers?: Prisma.ZapTriggerCreateNestedManyWithoutTypeInput;
 };
 
 export type TriggerUncheckedCreateInput = {
 	id?: string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	triggerTypeId: string;
-	zapId: string;
+	name: string;
+	description?: string | null;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
+	zapTriggers?: Prisma.ZapTriggerUncheckedCreateNestedManyWithoutTypeInput;
 };
 
 export type TriggerUpdateInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-	type?: Prisma.TriggerTypeUpdateOneRequiredWithoutTriggersNestedInput;
-	zap?: Prisma.ZapUpdateOneRequiredWithoutTriggerNestedInput;
+	zapTriggers?: Prisma.ZapTriggerUpdateManyWithoutTypeNestedInput;
 };
 
 export type TriggerUncheckedUpdateInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	triggerTypeId?: Prisma.StringFieldUpdateOperationsInput | string;
-	zapId?: Prisma.StringFieldUpdateOperationsInput | string;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+	zapTriggers?: Prisma.ZapTriggerUncheckedUpdateManyWithoutTypeNestedInput;
 };
 
 export type TriggerCreateManyInput = {
 	id?: string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	triggerTypeId: string;
-	zapId: string;
+	name: string;
+	description?: string | null;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
 };
 
 export type TriggerUpdateManyMutationInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
 export type TriggerUncheckedUpdateManyInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	triggerTypeId?: Prisma.StringFieldUpdateOperationsInput | string;
-	zapId?: Prisma.StringFieldUpdateOperationsInput | string;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
-export type TriggerNullableScalarRelationFilter = {
-	is?: Prisma.TriggerWhereInput | null;
-	isNot?: Prisma.TriggerWhereInput | null;
+export type TriggerScalarRelationFilter = {
+	is?: Prisma.TriggerWhereInput;
+	isNot?: Prisma.TriggerWhereInput;
 };
 
 export type TriggerCountOrderByAggregateInput = {
 	id?: Prisma.SortOrder;
-	metadata?: Prisma.SortOrder;
-	triggerTypeId?: Prisma.SortOrder;
-	zapId?: Prisma.SortOrder;
+	name?: Prisma.SortOrder;
+	description?: Prisma.SortOrder;
 	createdAt?: Prisma.SortOrder;
 	updatedAt?: Prisma.SortOrder;
 };
 
 export type TriggerMaxOrderByAggregateInput = {
 	id?: Prisma.SortOrder;
-	triggerTypeId?: Prisma.SortOrder;
-	zapId?: Prisma.SortOrder;
+	name?: Prisma.SortOrder;
+	description?: Prisma.SortOrder;
 	createdAt?: Prisma.SortOrder;
 	updatedAt?: Prisma.SortOrder;
 };
 
 export type TriggerMinOrderByAggregateInput = {
 	id?: Prisma.SortOrder;
-	triggerTypeId?: Prisma.SortOrder;
-	zapId?: Prisma.SortOrder;
+	name?: Prisma.SortOrder;
+	description?: Prisma.SortOrder;
 	createdAt?: Prisma.SortOrder;
 	updatedAt?: Prisma.SortOrder;
 };
 
-export type TriggerListRelationFilter = {
-	every?: Prisma.TriggerWhereInput;
-	some?: Prisma.TriggerWhereInput;
-	none?: Prisma.TriggerWhereInput;
-};
-
-export type TriggerOrderByRelationAggregateInput = {
-	_count?: Prisma.SortOrder;
-};
-
-export type TriggerCreateNestedOneWithoutZapInput = {
+export type TriggerCreateNestedOneWithoutZapTriggersInput = {
 	create?: Prisma.XOR<
-		Prisma.TriggerCreateWithoutZapInput,
-		Prisma.TriggerUncheckedCreateWithoutZapInput
+		Prisma.TriggerCreateWithoutZapTriggersInput,
+		Prisma.TriggerUncheckedCreateWithoutZapTriggersInput
 	>;
-	connectOrCreate?: Prisma.TriggerCreateOrConnectWithoutZapInput;
+	connectOrCreate?: Prisma.TriggerCreateOrConnectWithoutZapTriggersInput;
 	connect?: Prisma.TriggerWhereUniqueInput;
 };
 
-export type TriggerUncheckedCreateNestedOneWithoutZapInput = {
+export type TriggerUpdateOneRequiredWithoutZapTriggersNestedInput = {
 	create?: Prisma.XOR<
-		Prisma.TriggerCreateWithoutZapInput,
-		Prisma.TriggerUncheckedCreateWithoutZapInput
+		Prisma.TriggerCreateWithoutZapTriggersInput,
+		Prisma.TriggerUncheckedCreateWithoutZapTriggersInput
 	>;
-	connectOrCreate?: Prisma.TriggerCreateOrConnectWithoutZapInput;
-	connect?: Prisma.TriggerWhereUniqueInput;
-};
-
-export type TriggerUpdateOneWithoutZapNestedInput = {
-	create?: Prisma.XOR<
-		Prisma.TriggerCreateWithoutZapInput,
-		Prisma.TriggerUncheckedCreateWithoutZapInput
-	>;
-	connectOrCreate?: Prisma.TriggerCreateOrConnectWithoutZapInput;
-	upsert?: Prisma.TriggerUpsertWithoutZapInput;
-	disconnect?: Prisma.TriggerWhereInput | boolean;
-	delete?: Prisma.TriggerWhereInput | boolean;
+	connectOrCreate?: Prisma.TriggerCreateOrConnectWithoutZapTriggersInput;
+	upsert?: Prisma.TriggerUpsertWithoutZapTriggersInput;
 	connect?: Prisma.TriggerWhereUniqueInput;
 	update?: Prisma.XOR<
 		Prisma.XOR<
-			Prisma.TriggerUpdateToOneWithWhereWithoutZapInput,
-			Prisma.TriggerUpdateWithoutZapInput
+			Prisma.TriggerUpdateToOneWithWhereWithoutZapTriggersInput,
+			Prisma.TriggerUpdateWithoutZapTriggersInput
 		>,
-		Prisma.TriggerUncheckedUpdateWithoutZapInput
+		Prisma.TriggerUncheckedUpdateWithoutZapTriggersInput
 	>;
 };
 
-export type TriggerUncheckedUpdateOneWithoutZapNestedInput = {
-	create?: Prisma.XOR<
-		Prisma.TriggerCreateWithoutZapInput,
-		Prisma.TriggerUncheckedCreateWithoutZapInput
-	>;
-	connectOrCreate?: Prisma.TriggerCreateOrConnectWithoutZapInput;
-	upsert?: Prisma.TriggerUpsertWithoutZapInput;
-	disconnect?: Prisma.TriggerWhereInput | boolean;
-	delete?: Prisma.TriggerWhereInput | boolean;
-	connect?: Prisma.TriggerWhereUniqueInput;
-	update?: Prisma.XOR<
-		Prisma.XOR<
-			Prisma.TriggerUpdateToOneWithWhereWithoutZapInput,
-			Prisma.TriggerUpdateWithoutZapInput
-		>,
-		Prisma.TriggerUncheckedUpdateWithoutZapInput
-	>;
-};
-
-export type TriggerCreateNestedManyWithoutTypeInput = {
-	create?:
-		| Prisma.XOR<
-				Prisma.TriggerCreateWithoutTypeInput,
-				Prisma.TriggerUncheckedCreateWithoutTypeInput
-		  >
-		| Prisma.TriggerCreateWithoutTypeInput[]
-		| Prisma.TriggerUncheckedCreateWithoutTypeInput[];
-	connectOrCreate?:
-		| Prisma.TriggerCreateOrConnectWithoutTypeInput
-		| Prisma.TriggerCreateOrConnectWithoutTypeInput[];
-	createMany?: Prisma.TriggerCreateManyTypeInputEnvelope;
-	connect?: Prisma.TriggerWhereUniqueInput | Prisma.TriggerWhereUniqueInput[];
-};
-
-export type TriggerUncheckedCreateNestedManyWithoutTypeInput = {
-	create?:
-		| Prisma.XOR<
-				Prisma.TriggerCreateWithoutTypeInput,
-				Prisma.TriggerUncheckedCreateWithoutTypeInput
-		  >
-		| Prisma.TriggerCreateWithoutTypeInput[]
-		| Prisma.TriggerUncheckedCreateWithoutTypeInput[];
-	connectOrCreate?:
-		| Prisma.TriggerCreateOrConnectWithoutTypeInput
-		| Prisma.TriggerCreateOrConnectWithoutTypeInput[];
-	createMany?: Prisma.TriggerCreateManyTypeInputEnvelope;
-	connect?: Prisma.TriggerWhereUniqueInput | Prisma.TriggerWhereUniqueInput[];
-};
-
-export type TriggerUpdateManyWithoutTypeNestedInput = {
-	create?:
-		| Prisma.XOR<
-				Prisma.TriggerCreateWithoutTypeInput,
-				Prisma.TriggerUncheckedCreateWithoutTypeInput
-		  >
-		| Prisma.TriggerCreateWithoutTypeInput[]
-		| Prisma.TriggerUncheckedCreateWithoutTypeInput[];
-	connectOrCreate?:
-		| Prisma.TriggerCreateOrConnectWithoutTypeInput
-		| Prisma.TriggerCreateOrConnectWithoutTypeInput[];
-	upsert?:
-		| Prisma.TriggerUpsertWithWhereUniqueWithoutTypeInput
-		| Prisma.TriggerUpsertWithWhereUniqueWithoutTypeInput[];
-	createMany?: Prisma.TriggerCreateManyTypeInputEnvelope;
-	set?: Prisma.TriggerWhereUniqueInput | Prisma.TriggerWhereUniqueInput[];
-	disconnect?:
-		| Prisma.TriggerWhereUniqueInput
-		| Prisma.TriggerWhereUniqueInput[];
-	delete?: Prisma.TriggerWhereUniqueInput | Prisma.TriggerWhereUniqueInput[];
-	connect?: Prisma.TriggerWhereUniqueInput | Prisma.TriggerWhereUniqueInput[];
-	update?:
-		| Prisma.TriggerUpdateWithWhereUniqueWithoutTypeInput
-		| Prisma.TriggerUpdateWithWhereUniqueWithoutTypeInput[];
-	updateMany?:
-		| Prisma.TriggerUpdateManyWithWhereWithoutTypeInput
-		| Prisma.TriggerUpdateManyWithWhereWithoutTypeInput[];
-	deleteMany?:
-		| Prisma.TriggerScalarWhereInput
-		| Prisma.TriggerScalarWhereInput[];
-};
-
-export type TriggerUncheckedUpdateManyWithoutTypeNestedInput = {
-	create?:
-		| Prisma.XOR<
-				Prisma.TriggerCreateWithoutTypeInput,
-				Prisma.TriggerUncheckedCreateWithoutTypeInput
-		  >
-		| Prisma.TriggerCreateWithoutTypeInput[]
-		| Prisma.TriggerUncheckedCreateWithoutTypeInput[];
-	connectOrCreate?:
-		| Prisma.TriggerCreateOrConnectWithoutTypeInput
-		| Prisma.TriggerCreateOrConnectWithoutTypeInput[];
-	upsert?:
-		| Prisma.TriggerUpsertWithWhereUniqueWithoutTypeInput
-		| Prisma.TriggerUpsertWithWhereUniqueWithoutTypeInput[];
-	createMany?: Prisma.TriggerCreateManyTypeInputEnvelope;
-	set?: Prisma.TriggerWhereUniqueInput | Prisma.TriggerWhereUniqueInput[];
-	disconnect?:
-		| Prisma.TriggerWhereUniqueInput
-		| Prisma.TriggerWhereUniqueInput[];
-	delete?: Prisma.TriggerWhereUniqueInput | Prisma.TriggerWhereUniqueInput[];
-	connect?: Prisma.TriggerWhereUniqueInput | Prisma.TriggerWhereUniqueInput[];
-	update?:
-		| Prisma.TriggerUpdateWithWhereUniqueWithoutTypeInput
-		| Prisma.TriggerUpdateWithWhereUniqueWithoutTypeInput[];
-	updateMany?:
-		| Prisma.TriggerUpdateManyWithWhereWithoutTypeInput
-		| Prisma.TriggerUpdateManyWithWhereWithoutTypeInput[];
-	deleteMany?:
-		| Prisma.TriggerScalarWhereInput
-		| Prisma.TriggerScalarWhereInput[];
-};
-
-export type TriggerCreateWithoutZapInput = {
+export type TriggerCreateWithoutZapTriggersInput = {
 	id?: string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	createdAt?: Date | string;
-	updatedAt?: Date | string;
-	type: Prisma.TriggerTypeCreateNestedOneWithoutTriggersInput;
-};
-
-export type TriggerUncheckedCreateWithoutZapInput = {
-	id?: string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	triggerTypeId: string;
+	name: string;
+	description?: string | null;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
 };
 
-export type TriggerCreateOrConnectWithoutZapInput = {
+export type TriggerUncheckedCreateWithoutZapTriggersInput = {
+	id?: string;
+	name: string;
+	description?: string | null;
+	createdAt?: Date | string;
+	updatedAt?: Date | string;
+};
+
+export type TriggerCreateOrConnectWithoutZapTriggersInput = {
 	where: Prisma.TriggerWhereUniqueInput;
 	create: Prisma.XOR<
-		Prisma.TriggerCreateWithoutZapInput,
-		Prisma.TriggerUncheckedCreateWithoutZapInput
+		Prisma.TriggerCreateWithoutZapTriggersInput,
+		Prisma.TriggerUncheckedCreateWithoutZapTriggersInput
 	>;
 };
 
-export type TriggerUpsertWithoutZapInput = {
+export type TriggerUpsertWithoutZapTriggersInput = {
 	update: Prisma.XOR<
-		Prisma.TriggerUpdateWithoutZapInput,
-		Prisma.TriggerUncheckedUpdateWithoutZapInput
+		Prisma.TriggerUpdateWithoutZapTriggersInput,
+		Prisma.TriggerUncheckedUpdateWithoutZapTriggersInput
 	>;
 	create: Prisma.XOR<
-		Prisma.TriggerCreateWithoutZapInput,
-		Prisma.TriggerUncheckedCreateWithoutZapInput
+		Prisma.TriggerCreateWithoutZapTriggersInput,
+		Prisma.TriggerUncheckedCreateWithoutZapTriggersInput
 	>;
 	where?: Prisma.TriggerWhereInput;
 };
 
-export type TriggerUpdateToOneWithWhereWithoutZapInput = {
+export type TriggerUpdateToOneWithWhereWithoutZapTriggersInput = {
 	where?: Prisma.TriggerWhereInput;
 	data: Prisma.XOR<
-		Prisma.TriggerUpdateWithoutZapInput,
-		Prisma.TriggerUncheckedUpdateWithoutZapInput
+		Prisma.TriggerUpdateWithoutZapTriggersInput,
+		Prisma.TriggerUncheckedUpdateWithoutZapTriggersInput
 	>;
 };
 
-export type TriggerUpdateWithoutZapInput = {
+export type TriggerUpdateWithoutZapTriggersInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-	type?: Prisma.TriggerTypeUpdateOneRequiredWithoutTriggersNestedInput;
-};
-
-export type TriggerUncheckedUpdateWithoutZapInput = {
-	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	triggerTypeId?: Prisma.StringFieldUpdateOperationsInput | string;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
-export type TriggerCreateWithoutTypeInput = {
-	id?: string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	createdAt?: Date | string;
-	updatedAt?: Date | string;
-	zap: Prisma.ZapCreateNestedOneWithoutTriggerInput;
-};
-
-export type TriggerUncheckedCreateWithoutTypeInput = {
-	id?: string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	zapId: string;
-	createdAt?: Date | string;
-	updatedAt?: Date | string;
-};
-
-export type TriggerCreateOrConnectWithoutTypeInput = {
-	where: Prisma.TriggerWhereUniqueInput;
-	create: Prisma.XOR<
-		Prisma.TriggerCreateWithoutTypeInput,
-		Prisma.TriggerUncheckedCreateWithoutTypeInput
-	>;
-};
-
-export type TriggerCreateManyTypeInputEnvelope = {
-	data: Prisma.TriggerCreateManyTypeInput | Prisma.TriggerCreateManyTypeInput[];
-	skipDuplicates?: boolean;
-};
-
-export type TriggerUpsertWithWhereUniqueWithoutTypeInput = {
-	where: Prisma.TriggerWhereUniqueInput;
-	update: Prisma.XOR<
-		Prisma.TriggerUpdateWithoutTypeInput,
-		Prisma.TriggerUncheckedUpdateWithoutTypeInput
-	>;
-	create: Prisma.XOR<
-		Prisma.TriggerCreateWithoutTypeInput,
-		Prisma.TriggerUncheckedCreateWithoutTypeInput
-	>;
-};
-
-export type TriggerUpdateWithWhereUniqueWithoutTypeInput = {
-	where: Prisma.TriggerWhereUniqueInput;
-	data: Prisma.XOR<
-		Prisma.TriggerUpdateWithoutTypeInput,
-		Prisma.TriggerUncheckedUpdateWithoutTypeInput
-	>;
-};
-
-export type TriggerUpdateManyWithWhereWithoutTypeInput = {
-	where: Prisma.TriggerScalarWhereInput;
-	data: Prisma.XOR<
-		Prisma.TriggerUpdateManyMutationInput,
-		Prisma.TriggerUncheckedUpdateManyWithoutTypeInput
-	>;
-};
-
-export type TriggerScalarWhereInput = {
-	AND?: Prisma.TriggerScalarWhereInput | Prisma.TriggerScalarWhereInput[];
-	OR?: Prisma.TriggerScalarWhereInput[];
-	NOT?: Prisma.TriggerScalarWhereInput | Prisma.TriggerScalarWhereInput[];
-	id?: Prisma.StringFilter<"Trigger"> | string;
-	metadata?: Prisma.JsonFilter<"Trigger">;
-	triggerTypeId?: Prisma.StringFilter<"Trigger"> | string;
-	zapId?: Prisma.StringFilter<"Trigger"> | string;
-	createdAt?: Prisma.DateTimeFilter<"Trigger"> | Date | string;
-	updatedAt?: Prisma.DateTimeFilter<"Trigger"> | Date | string;
-};
-
-export type TriggerCreateManyTypeInput = {
-	id?: string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	zapId: string;
-	createdAt?: Date | string;
-	updatedAt?: Date | string;
-};
-
-export type TriggerUpdateWithoutTypeInput = {
+export type TriggerUncheckedUpdateWithoutZapTriggersInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-	zap?: Prisma.ZapUpdateOneRequiredWithoutTriggerNestedInput;
-};
-
-export type TriggerUncheckedUpdateWithoutTypeInput = {
-	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	zapId?: Prisma.StringFieldUpdateOperationsInput | string;
+	name?: Prisma.StringFieldUpdateOperationsInput | string;
+	description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
-export type TriggerUncheckedUpdateManyWithoutTypeInput = {
-	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
-	zapId?: Prisma.StringFieldUpdateOperationsInput | string;
-	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+/**
+ * Count Type TriggerCountOutputType
+ */
+
+export type TriggerCountOutputType = {
+	zapTriggers: number;
+};
+
+export type TriggerCountOutputTypeSelect<
+	ExtArgs extends
+		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+	zapTriggers?: boolean | TriggerCountOutputTypeCountZapTriggersArgs;
+};
+
+/**
+ * TriggerCountOutputType without action
+ */
+export type TriggerCountOutputTypeDefaultArgs<
+	ExtArgs extends
+		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+	/**
+	 * Select specific fields to fetch from the TriggerCountOutputType
+	 */
+	select?: Prisma.TriggerCountOutputTypeSelect<ExtArgs> | null;
+};
+
+/**
+ * TriggerCountOutputType without action
+ */
+export type TriggerCountOutputTypeCountZapTriggersArgs<
+	ExtArgs extends
+		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+	where?: Prisma.ZapTriggerWhereInput;
 };
 
 export type TriggerSelect<
@@ -673,13 +460,12 @@ export type TriggerSelect<
 > = runtime.Types.Extensions.GetSelect<
 	{
 		id?: boolean;
-		metadata?: boolean;
-		triggerTypeId?: boolean;
-		zapId?: boolean;
+		name?: boolean;
+		description?: boolean;
 		createdAt?: boolean;
 		updatedAt?: boolean;
-		type?: boolean | Prisma.TriggerTypeDefaultArgs<ExtArgs>;
-		zap?: boolean | Prisma.ZapDefaultArgs<ExtArgs>;
+		zapTriggers?: boolean | Prisma.Trigger$zapTriggersArgs<ExtArgs>;
+		_count?: boolean | Prisma.TriggerCountOutputTypeDefaultArgs<ExtArgs>;
 	},
 	ExtArgs["result"]["trigger"]
 >;
@@ -690,13 +476,10 @@ export type TriggerSelectCreateManyAndReturn<
 > = runtime.Types.Extensions.GetSelect<
 	{
 		id?: boolean;
-		metadata?: boolean;
-		triggerTypeId?: boolean;
-		zapId?: boolean;
+		name?: boolean;
+		description?: boolean;
 		createdAt?: boolean;
 		updatedAt?: boolean;
-		type?: boolean | Prisma.TriggerTypeDefaultArgs<ExtArgs>;
-		zap?: boolean | Prisma.ZapDefaultArgs<ExtArgs>;
 	},
 	ExtArgs["result"]["trigger"]
 >;
@@ -707,22 +490,18 @@ export type TriggerSelectUpdateManyAndReturn<
 > = runtime.Types.Extensions.GetSelect<
 	{
 		id?: boolean;
-		metadata?: boolean;
-		triggerTypeId?: boolean;
-		zapId?: boolean;
+		name?: boolean;
+		description?: boolean;
 		createdAt?: boolean;
 		updatedAt?: boolean;
-		type?: boolean | Prisma.TriggerTypeDefaultArgs<ExtArgs>;
-		zap?: boolean | Prisma.ZapDefaultArgs<ExtArgs>;
 	},
 	ExtArgs["result"]["trigger"]
 >;
 
 export type TriggerSelectScalar = {
 	id?: boolean;
-	metadata?: boolean;
-	triggerTypeId?: boolean;
-	zapId?: boolean;
+	name?: boolean;
+	description?: boolean;
 	createdAt?: boolean;
 	updatedAt?: boolean;
 };
@@ -731,30 +510,24 @@ export type TriggerOmit<
 	ExtArgs extends
 		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetOmit<
-	"id" | "metadata" | "triggerTypeId" | "zapId" | "createdAt" | "updatedAt",
+	"id" | "name" | "description" | "createdAt" | "updatedAt",
 	ExtArgs["result"]["trigger"]
 >;
 export type TriggerInclude<
 	ExtArgs extends
 		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-	type?: boolean | Prisma.TriggerTypeDefaultArgs<ExtArgs>;
-	zap?: boolean | Prisma.ZapDefaultArgs<ExtArgs>;
+	zapTriggers?: boolean | Prisma.Trigger$zapTriggersArgs<ExtArgs>;
+	_count?: boolean | Prisma.TriggerCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type TriggerIncludeCreateManyAndReturn<
 	ExtArgs extends
 		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-> = {
-	type?: boolean | Prisma.TriggerTypeDefaultArgs<ExtArgs>;
-	zap?: boolean | Prisma.ZapDefaultArgs<ExtArgs>;
-};
+> = {};
 export type TriggerIncludeUpdateManyAndReturn<
 	ExtArgs extends
 		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-> = {
-	type?: boolean | Prisma.TriggerTypeDefaultArgs<ExtArgs>;
-	zap?: boolean | Prisma.ZapDefaultArgs<ExtArgs>;
-};
+> = {};
 
 export type $TriggerPayload<
 	ExtArgs extends
@@ -762,15 +535,13 @@ export type $TriggerPayload<
 > = {
 	name: "Trigger";
 	objects: {
-		type: Prisma.$TriggerTypePayload<ExtArgs>;
-		zap: Prisma.$ZapPayload<ExtArgs>;
+		zapTriggers: Prisma.$ZapTriggerPayload<ExtArgs>[];
 	};
 	scalars: runtime.Types.Extensions.GetPayloadResult<
 		{
 			id: string;
-			metadata: runtime.JsonValue;
-			triggerTypeId: string;
-			zapId: string;
+			name: string;
+			description: string | null;
 			createdAt: Date;
 			updatedAt: Date;
 		},
@@ -1323,33 +1094,16 @@ export interface Prisma__TriggerClient<
 	GlobalOmitOptions = {},
 > extends Prisma.PrismaPromise<T> {
 	readonly [Symbol.toStringTag]: "PrismaPromise";
-	type<T extends Prisma.TriggerTypeDefaultArgs<ExtArgs> = {}>(
-		args?: Prisma.Subset<T, Prisma.TriggerTypeDefaultArgs<ExtArgs>>,
-	): Prisma.Prisma__TriggerTypeClient<
+	zapTriggers<T extends Prisma.Trigger$zapTriggersArgs<ExtArgs> = {}>(
+		args?: Prisma.Subset<T, Prisma.Trigger$zapTriggersArgs<ExtArgs>>,
+	): Prisma.PrismaPromise<
 		| runtime.Types.Result.GetResult<
-				Prisma.$TriggerTypePayload<ExtArgs>,
+				Prisma.$ZapTriggerPayload<ExtArgs>,
 				T,
-				"findUniqueOrThrow",
+				"findMany",
 				GlobalOmitOptions
 		  >
-		| Null,
-		Null,
-		ExtArgs,
-		GlobalOmitOptions
-	>;
-	zap<T extends Prisma.ZapDefaultArgs<ExtArgs> = {}>(
-		args?: Prisma.Subset<T, Prisma.ZapDefaultArgs<ExtArgs>>,
-	): Prisma.Prisma__ZapClient<
-		| runtime.Types.Result.GetResult<
-				Prisma.$ZapPayload<ExtArgs>,
-				T,
-				"findUniqueOrThrow",
-				GlobalOmitOptions
-		  >
-		| Null,
-		Null,
-		ExtArgs,
-		GlobalOmitOptions
+		| Null
 	>;
 	/**
 	 * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1394,9 +1148,8 @@ export interface Prisma__TriggerClient<
  */
 export interface TriggerFieldRefs {
 	readonly id: Prisma.FieldRef<"Trigger", "String">;
-	readonly metadata: Prisma.FieldRef<"Trigger", "Json">;
-	readonly triggerTypeId: Prisma.FieldRef<"Trigger", "String">;
-	readonly zapId: Prisma.FieldRef<"Trigger", "String">;
+	readonly name: Prisma.FieldRef<"Trigger", "String">;
+	readonly description: Prisma.FieldRef<"Trigger", "String">;
 	readonly createdAt: Prisma.FieldRef<"Trigger", "DateTime">;
 	readonly updatedAt: Prisma.FieldRef<"Trigger", "DateTime">;
 }
@@ -1680,10 +1433,6 @@ export type TriggerCreateManyAndReturnArgs<
 	 */
 	data: Prisma.TriggerCreateManyInput | Prisma.TriggerCreateManyInput[];
 	skipDuplicates?: boolean;
-	/**
-	 * Choose, which related nodes to fetch as well
-	 */
-	include?: Prisma.TriggerIncludeCreateManyAndReturn<ExtArgs> | null;
 };
 
 /**
@@ -1772,10 +1521,6 @@ export type TriggerUpdateManyAndReturnArgs<
 	 * Limit how many Triggers to update.
 	 */
 	limit?: number;
-	/**
-	 * Choose, which related nodes to fetch as well
-	 */
-	include?: Prisma.TriggerIncludeUpdateManyAndReturn<ExtArgs> | null;
 };
 
 /**
@@ -1857,6 +1602,37 @@ export type TriggerDeleteManyArgs<
 	 * Limit how many Triggers to delete.
 	 */
 	limit?: number;
+};
+
+/**
+ * Trigger.zapTriggers
+ */
+export type Trigger$zapTriggersArgs<
+	ExtArgs extends
+		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+	/**
+	 * Select specific fields to fetch from the ZapTrigger
+	 */
+	select?: Prisma.ZapTriggerSelect<ExtArgs> | null;
+	/**
+	 * Omit specific fields from the ZapTrigger
+	 */
+	omit?: Prisma.ZapTriggerOmit<ExtArgs> | null;
+	/**
+	 * Choose, which related nodes to fetch as well
+	 */
+	include?: Prisma.ZapTriggerInclude<ExtArgs> | null;
+	where?: Prisma.ZapTriggerWhereInput;
+	orderBy?:
+		| Prisma.ZapTriggerOrderByWithRelationInput
+		| Prisma.ZapTriggerOrderByWithRelationInput[];
+	cursor?: Prisma.ZapTriggerWhereUniqueInput;
+	take?: number;
+	skip?: number;
+	distinct?:
+		| Prisma.ZapTriggerScalarFieldEnum
+		| Prisma.ZapTriggerScalarFieldEnum[];
 };
 
 /**

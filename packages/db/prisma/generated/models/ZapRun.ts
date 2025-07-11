@@ -39,8 +39,8 @@ export type ZapRunMaxAggregateOutputType = {
 
 export type ZapRunCountAggregateOutputType = {
 	id: number;
-	zapId: number;
 	metadata: number;
+	zapId: number;
 	createdAt: number;
 	updatedAt: number;
 	_all: number;
@@ -62,8 +62,8 @@ export type ZapRunMaxAggregateInputType = {
 
 export type ZapRunCountAggregateInputType = {
 	id?: true;
-	zapId?: true;
 	metadata?: true;
+	zapId?: true;
 	createdAt?: true;
 	updatedAt?: true;
 	_all?: true;
@@ -150,8 +150,8 @@ export type ZapRunGroupByArgs<
 
 export type ZapRunGroupByOutputType = {
 	id: string;
-	zapId: string;
 	metadata: runtime.JsonValue | null;
+	zapId: string;
 	createdAt: Date;
 	updatedAt: Date;
 	_count: ZapRunCountAggregateOutputType | null;
@@ -177,8 +177,8 @@ export type ZapRunWhereInput = {
 	OR?: Prisma.ZapRunWhereInput[];
 	NOT?: Prisma.ZapRunWhereInput | Prisma.ZapRunWhereInput[];
 	id?: Prisma.StringFilter<"ZapRun"> | string;
-	zapId?: Prisma.StringFilter<"ZapRun"> | string;
 	metadata?: Prisma.JsonNullableFilter<"ZapRun">;
+	zapId?: Prisma.StringFilter<"ZapRun"> | string;
 	createdAt?: Prisma.DateTimeFilter<"ZapRun"> | Date | string;
 	updatedAt?: Prisma.DateTimeFilter<"ZapRun"> | Date | string;
 	zap?: Prisma.XOR<Prisma.ZapScalarRelationFilter, Prisma.ZapWhereInput>;
@@ -190,8 +190,8 @@ export type ZapRunWhereInput = {
 
 export type ZapRunOrderByWithRelationInput = {
 	id?: Prisma.SortOrder;
-	zapId?: Prisma.SortOrder;
 	metadata?: Prisma.SortOrderInput | Prisma.SortOrder;
+	zapId?: Prisma.SortOrder;
 	createdAt?: Prisma.SortOrder;
 	updatedAt?: Prisma.SortOrder;
 	zap?: Prisma.ZapOrderByWithRelationInput;
@@ -204,8 +204,8 @@ export type ZapRunWhereUniqueInput = Prisma.AtLeast<
 		AND?: Prisma.ZapRunWhereInput | Prisma.ZapRunWhereInput[];
 		OR?: Prisma.ZapRunWhereInput[];
 		NOT?: Prisma.ZapRunWhereInput | Prisma.ZapRunWhereInput[];
-		zapId?: Prisma.StringFilter<"ZapRun"> | string;
 		metadata?: Prisma.JsonNullableFilter<"ZapRun">;
+		zapId?: Prisma.StringFilter<"ZapRun"> | string;
 		createdAt?: Prisma.DateTimeFilter<"ZapRun"> | Date | string;
 		updatedAt?: Prisma.DateTimeFilter<"ZapRun"> | Date | string;
 		zap?: Prisma.XOR<Prisma.ZapScalarRelationFilter, Prisma.ZapWhereInput>;
@@ -219,8 +219,8 @@ export type ZapRunWhereUniqueInput = Prisma.AtLeast<
 
 export type ZapRunOrderByWithAggregationInput = {
 	id?: Prisma.SortOrder;
-	zapId?: Prisma.SortOrder;
 	metadata?: Prisma.SortOrderInput | Prisma.SortOrder;
+	zapId?: Prisma.SortOrder;
 	createdAt?: Prisma.SortOrder;
 	updatedAt?: Prisma.SortOrder;
 	_count?: Prisma.ZapRunCountOrderByAggregateInput;
@@ -237,8 +237,8 @@ export type ZapRunScalarWhereWithAggregatesInput = {
 		| Prisma.ZapRunScalarWhereWithAggregatesInput
 		| Prisma.ZapRunScalarWhereWithAggregatesInput[];
 	id?: Prisma.StringWithAggregatesFilter<"ZapRun"> | string;
-	zapId?: Prisma.StringWithAggregatesFilter<"ZapRun"> | string;
 	metadata?: Prisma.JsonNullableWithAggregatesFilter<"ZapRun">;
+	zapId?: Prisma.StringWithAggregatesFilter<"ZapRun"> | string;
 	createdAt?: Prisma.DateTimeWithAggregatesFilter<"ZapRun"> | Date | string;
 	updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ZapRun"> | Date | string;
 };
@@ -254,8 +254,8 @@ export type ZapRunCreateInput = {
 
 export type ZapRunUncheckedCreateInput = {
 	id?: string;
-	zapId: string;
 	metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+	zapId: string;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
 	zapRunOutbox?: Prisma.ZapRunOutboxUncheckedCreateNestedOneWithoutZapRunInput;
@@ -272,8 +272,8 @@ export type ZapRunUpdateInput = {
 
 export type ZapRunUncheckedUpdateInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	zapId?: Prisma.StringFieldUpdateOperationsInput | string;
 	metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+	zapId?: Prisma.StringFieldUpdateOperationsInput | string;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	zapRunOutbox?: Prisma.ZapRunOutboxUncheckedUpdateOneWithoutZapRunNestedInput;
@@ -281,8 +281,8 @@ export type ZapRunUncheckedUpdateInput = {
 
 export type ZapRunCreateManyInput = {
 	id?: string;
-	zapId: string;
 	metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+	zapId: string;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
 };
@@ -296,8 +296,8 @@ export type ZapRunUpdateManyMutationInput = {
 
 export type ZapRunUncheckedUpdateManyInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	zapId?: Prisma.StringFieldUpdateOperationsInput | string;
 	metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+	zapId?: Prisma.StringFieldUpdateOperationsInput | string;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -314,8 +314,8 @@ export type ZapRunOrderByRelationAggregateInput = {
 
 export type ZapRunCountOrderByAggregateInput = {
 	id?: Prisma.SortOrder;
-	zapId?: Prisma.SortOrder;
 	metadata?: Prisma.SortOrder;
+	zapId?: Prisma.SortOrder;
 	createdAt?: Prisma.SortOrder;
 	updatedAt?: Prisma.SortOrder;
 };
@@ -513,8 +513,8 @@ export type ZapRunScalarWhereInput = {
 	OR?: Prisma.ZapRunScalarWhereInput[];
 	NOT?: Prisma.ZapRunScalarWhereInput | Prisma.ZapRunScalarWhereInput[];
 	id?: Prisma.StringFilter<"ZapRun"> | string;
-	zapId?: Prisma.StringFilter<"ZapRun"> | string;
 	metadata?: Prisma.JsonNullableFilter<"ZapRun">;
+	zapId?: Prisma.StringFilter<"ZapRun"> | string;
 	createdAt?: Prisma.DateTimeFilter<"ZapRun"> | Date | string;
 	updatedAt?: Prisma.DateTimeFilter<"ZapRun"> | Date | string;
 };
@@ -529,8 +529,8 @@ export type ZapRunCreateWithoutZapRunOutboxInput = {
 
 export type ZapRunUncheckedCreateWithoutZapRunOutboxInput = {
 	id?: string;
-	zapId: string;
 	metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+	zapId: string;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
 };
@@ -573,8 +573,8 @@ export type ZapRunUpdateWithoutZapRunOutboxInput = {
 
 export type ZapRunUncheckedUpdateWithoutZapRunOutboxInput = {
 	id?: Prisma.StringFieldUpdateOperationsInput | string;
-	zapId?: Prisma.StringFieldUpdateOperationsInput | string;
 	metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+	zapId?: Prisma.StringFieldUpdateOperationsInput | string;
 	createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 	updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -615,8 +615,8 @@ export type ZapRunSelect<
 > = runtime.Types.Extensions.GetSelect<
 	{
 		id?: boolean;
-		zapId?: boolean;
 		metadata?: boolean;
+		zapId?: boolean;
 		createdAt?: boolean;
 		updatedAt?: boolean;
 		zap?: boolean | Prisma.ZapDefaultArgs<ExtArgs>;
@@ -631,8 +631,8 @@ export type ZapRunSelectCreateManyAndReturn<
 > = runtime.Types.Extensions.GetSelect<
 	{
 		id?: boolean;
-		zapId?: boolean;
 		metadata?: boolean;
+		zapId?: boolean;
 		createdAt?: boolean;
 		updatedAt?: boolean;
 		zap?: boolean | Prisma.ZapDefaultArgs<ExtArgs>;
@@ -646,8 +646,8 @@ export type ZapRunSelectUpdateManyAndReturn<
 > = runtime.Types.Extensions.GetSelect<
 	{
 		id?: boolean;
-		zapId?: boolean;
 		metadata?: boolean;
+		zapId?: boolean;
 		createdAt?: boolean;
 		updatedAt?: boolean;
 		zap?: boolean | Prisma.ZapDefaultArgs<ExtArgs>;
@@ -657,8 +657,8 @@ export type ZapRunSelectUpdateManyAndReturn<
 
 export type ZapRunSelectScalar = {
 	id?: boolean;
-	zapId?: boolean;
 	metadata?: boolean;
+	zapId?: boolean;
 	createdAt?: boolean;
 	updatedAt?: boolean;
 };
@@ -667,7 +667,7 @@ export type ZapRunOmit<
 	ExtArgs extends
 		runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetOmit<
-	"id" | "zapId" | "metadata" | "createdAt" | "updatedAt",
+	"id" | "metadata" | "zapId" | "createdAt" | "updatedAt",
 	ExtArgs["result"]["zapRun"]
 >;
 export type ZapRunInclude<
@@ -702,8 +702,8 @@ export type $ZapRunPayload<
 	scalars: runtime.Types.Extensions.GetPayloadResult<
 		{
 			id: string;
-			zapId: string;
 			metadata: runtime.JsonValue | null;
+			zapId: string;
 			createdAt: Date;
 			updatedAt: Date;
 		},
@@ -1326,8 +1326,8 @@ export interface Prisma__ZapRunClient<
  */
 export interface ZapRunFieldRefs {
 	readonly id: Prisma.FieldRef<"ZapRun", "String">;
-	readonly zapId: Prisma.FieldRef<"ZapRun", "String">;
 	readonly metadata: Prisma.FieldRef<"ZapRun", "Json">;
+	readonly zapId: Prisma.FieldRef<"ZapRun", "String">;
 	readonly createdAt: Prisma.FieldRef<"ZapRun", "DateTime">;
 	readonly updatedAt: Prisma.FieldRef<"ZapRun", "DateTime">;
 }
