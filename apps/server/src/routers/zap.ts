@@ -23,9 +23,9 @@ export const zapRouter = router({
 
 	getOne: protectedProcedure
 		.input(z.object({ id: z.string() }))
-		.query(async ({ input }) => {
+		.query(async ({ input, ctx }) => {
 			const zap = await db.zap.findUnique({
-				where: { id: input.id },
+				where: { id: input.id, userId: ctx.session.user.id },
 				include: {
 					zapTrigger: true,
 					zapActions: true,
@@ -48,10 +48,12 @@ export const zapRouter = router({
 				name: z.string().min(1, "Name is required"),
 				description: z.string().optional(),
 				triggerId: z.string().min(1, "Trigger id is required"),
+				triggerMetadata: z.record(z.string(), z.any()).optional(),
 				actions: z
 					.array(
 						z.object({
 							actionId: z.string().min(1, "Action id is required"),
+							metadata: z.record(z.string(), z.any()).optional(),
 						}),
 					)
 					.nonempty("At least one action is required"),
@@ -63,14 +65,10 @@ export const zapRouter = router({
 					data: {
 						name: input.name,
 						description: input.description,
-						zapTrigger: {
-							create: {
-								triggerId: input.triggerId,
-							},
-						},
 						zapActions: {
 							create: input.actions.map((action, index) => ({
 								actionId: action.actionId,
+								metadata: action.metadata,
 								sortingOrder: index + 1,
 							})),
 						},
@@ -82,6 +80,7 @@ export const zapRouter = router({
 					data: {
 						zapId: zap.id,
 						triggerId: input.triggerId,
+						metadata: input.triggerMetadata,
 					},
 				});
 

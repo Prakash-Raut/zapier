@@ -1,5 +1,3 @@
-import type { Prisma } from "@repo/db";
-
 import { db } from "@repo/db";
 import { Kafka } from "kafkajs";
 
@@ -10,38 +8,14 @@ const kafka = new Kafka({
 	brokers: ["localhost:9092"],
 });
 
-async function withRetry<T>(
-	fn: () => Promise<T>,
-	label: string,
-	retries = 3,
-	delay = 1000,
-): Promise<T> {
-	let attempt = 0;
-	while (attempt < retries) {
-		try {
-			return await fn();
-		} catch (err) {
-			attempt++;
-			console.warn(`⚠️ ${label} failed (attempt ${attempt}/${retries}):`, err);
-			if (attempt === retries) throw err;
-			await new Promise((r) => setTimeout(r, delay));
-		}
-	}
-	throw new Error(`${label} failed after ${retries} retries`);
-}
-
 async function main() {
 	const consumer = kafka.consumer({ groupId: "zap-group" });
 	const producer = kafka.producer();
 
-	try {
-		await withRetry(() => consumer.connect(), "Kafka Consumer Connect");
-		await withRetry(() => producer.connect(), "Kafka Producer Connect");
-		console.log("✅ Kafka connected");
-	} catch (err) {
-		console.error("❌ Kafka connection failed:", err);
-		process.exit(1);
-	}
+	await consumer.connect();
+	await producer.connect();
+
+	console.log("✅ Kafka connected");
 
 	await consumer.subscribe({ topic: TOPIC_NAME, fromBeginning: true });
 
@@ -61,51 +35,22 @@ async function main() {
 				return;
 			}
 
-			let parsedValue: { zapRunId: string; stage: number };
-			try {
-				parsedValue = JSON.parse(rawValue);
-			} catch (err) {
-				console.error("❌ Failed to parse Kafka message:", err);
-				return;
-			}
+			const parsedValue = JSON.parse(rawValue);
 
 			const { zapRunId, stage } = parsedValue;
 
-			let zapRunDetails: Prisma.ZapRunGetPayload<{
+			const zapRunDetails = await db.zapRun.findFirst({
+				where: { id: zapRunId },
 				include: {
 					zap: {
 						include: {
 							zapActions: {
-								include: {
-									type: true;
-								};
-							};
-						};
-					};
-				};
-			}> | null;
-
-			try {
-				zapRunDetails = await withRetry(
-					() =>
-						db.zapRun.findFirst({
-							where: { id: zapRunId },
-							include: {
-								zap: {
-									include: {
-										zapActions: {
-											include: { type: true },
-										},
-									},
-								},
+								include: { type: true },
 							},
-						}),
-					"Fetch ZapRun",
-				);
-			} catch (err) {
-				console.error("❌ Failed to fetch zapRun:", err);
-				return;
-			}
+						},
+					},
+				},
+			});
 
 			if (!zapRunDetails) {
 				console.warn("⚠️ ZapRun not found:", zapRunId);
@@ -121,37 +66,37 @@ async function main() {
 				return;
 			}
 
-			console.log("⚙️ Executing action:", currentAction.id);
-			await new Promise((r) => setTimeout(r, 500)); // simulate work
+			if (currentAction.type.id === "email") {
+				console.log("Sending Email");
+				await new Promise((r) => setTimeout(r, 1000));
+			}
+
+			if (currentAction.type.id === "send-sol") {
+				console.log("Sending SOL");
+				await new Promise((r) => setTimeout(r, 1000));
+			}
+
+			await new Promise((r) => setTimeout(r, 500));
 
 			const lastStage = (zapRunDetails?.zap.zapActions?.length || 1) - 1;
 
-			if (stage < lastStage) {
-				try {
-					await withRetry(
-						() =>
-							producer.send({
-								topic: TOPIC_NAME,
-								messages: [
-									{
-										value: JSON.stringify({
-											stage: stage + 1,
-											zapRunId,
-										}),
-									},
-								],
+			if (lastStage !== stage) {
+				console.log("Pushing Back to Queue");
+
+				await producer.send({
+					topic: TOPIC_NAME,
+					messages: [
+						{
+							value: JSON.stringify({
+								stage: stage + 1,
+								zapRunId,
 							}),
-						"Kafka Re-queue",
-					);
+						},
+					],
+				});
 
-					console.log("🔁 Re-queued for next stage");
-				} catch (err) {
-					console.error("❌ Failed to re-queue next stage:", err);
-					return;
-				}
-			}
+				console.log("Processing Done");
 
-			try {
 				await consumer.commitOffsets([
 					{
 						topic,
@@ -159,9 +104,6 @@ async function main() {
 						offset: (Number.parseInt(message.offset) + 1).toString(),
 					},
 				]);
-				console.log("✅ Offset committed");
-			} catch (err) {
-				console.error("❌ Failed to commit offset:", err);
 			}
 		},
 	});

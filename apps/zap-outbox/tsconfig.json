@@ -12,9 +12,7 @@
 		},
 		"outDir": "./dist",
 		"types": ["bun"],
-		"composite": true,
-		"jsx": "react-jsx",
-		"jsxImportSource": "hono/jsx"
+		"composite": true
 	},
 	"tsc-alias": {
 		"resolveFullPaths": true
